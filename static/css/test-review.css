@@ -1,0 +1,135 @@
+.main-body {
+    margin-bottom: 20px;
+}
+
+.nav-bar-1 p {
+    margin-bottom: 16px;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+}
+
+.options {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+input[type=submit] {
+    background-color: rgb(107, 3, 125);
+    color: white;
+    text-align: center;
+    width: 150px;
+    padding: 20px 10px;
+    border-style: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: rgba(54, 1, 63, 1);
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+input[type=text] {
+    width: 50%;
+    height: 50px;
+    margin: 30px;
+    padding: 0 20px;
+}
+
+.wrong-input {
+    border: 2px solid #f50000 !important;
+}
+
+.wrong-icon {
+    color: #f50000;
+}
+
+.correct-input {
+    border: 2px solid #43c81e !important;
+}
+
+.correct-icon {
+    color: #43c81e;
+}
+
+.skip {
+    border: 2px solid grey !important;
+}
+
+.options i {
+    font-size: 2.6rem;
+    position: absolute;
+}
+
+.options p {
+    position: absolute;
+    color: grey;
+}
+
+@media screen and (min-width: 1024px) {
+
+
+    .options i {
+        margin-top: 38px;
+        margin-left: 550px;
+    }
+
+    .options p {
+        margin-top: 45px;
+        margin-left: 550px;
+    }
+
+    .header h1{
+        font-size: 1.5rem !important;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .header h1{
+        font-size: 1.2rem !important;
+    }
+
+    .options i {
+        margin-top: 35px;
+        margin-left: 330px;
+    }
+
+    .options p {
+        margin-top: 45px;
+        margin-left: 290px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .header h1{
+        font-size: 1rem !important;
+    }
+
+    .options i {
+        margin-top: 38px;
+        margin-left: 210px;
+        font-size: 2rem;
+    }
+
+    .options p {
+        margin-top: 45px;
+        margin-left: 190px;
+    }
+
+    input[type=text] {
+        width: 70%;
+    }
+}

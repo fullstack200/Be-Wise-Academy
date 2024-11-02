@@ -1,0 +1,1033 @@
+:root {
+    --font: 'Lato', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+}
+
+.header {
+    width: 100%;
+    margin: 0;
+    color: white;
+    background: rgb(107, 3, 125);
+    background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+    padding: 50px 0;
+    text-align: center;
+    font-weight: 900;
+}
+
+
+.header__center {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-column-gap: 1.2rem;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.header__center h1 {
+    color: white;
+    background: rgb(107, 3, 125);
+    background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+    padding: 10px 20px;
+
+}
+
+.header__center::before,
+.header__center::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #36013F;
+}
+
+.side-bar {
+    display: none;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    color: #36013F;
+    font-family: var(--font);
+    border-bottom: 1px solid #36013F;
+}
+
+.nav-bar-1,
+.nav-bar-2,
+.nav-bar-3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav-bar-1 p {
+    line-height: 1;
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
+.nav-bar-2 a {
+    background-image: linear-gradient(to right,
+            #36013f,
+            #36013f 50%,
+            #36013f 50%);
+    background-size: 200% 100%;
+    background-position: -100%;
+    display: inline-block;
+    padding: 5px 0;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-bar-2 a:before {
+    content: '';
+    background: #36013f;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-bar-2 a:hover {
+    background-position: 0;
+}
+
+.nav-bar-2 a:hover::before {
+    width: 100%;
+}
+
+.nav-bar-3 a {
+    margin-bottom: 0px;
+    transition: .1s;
+    color: #36013F;
+}
+
+.nav-bar-3 a:hover {
+    margin-bottom: 15px;
+    transition: .1s;
+    color: #36013F;
+    text-decoration: none;
+}
+
+.nav-bar-3 i {
+    font-size: 1.5rem;
+}
+
+.nav-bar-3 p {
+    color: #36013F;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.reveal {
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: 1s all ease;
+}
+
+.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.subjects:hover {
+    transform: scale(1.1);
+    transition: 1s;
+    box-shadow: 5px 5px 5px 5px #888888;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+/**********************************************************************************************************************************************/
+/* Full-width input fields */
+input[type=text],
+input[type=password],
+input[type=number],
+input[type=email],
+select {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+label {
+    color: white;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+.b-container {
+    display: flex;
+    flex-direction: column;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* The model (background) */
+.model {
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.close1,
+.close2 {
+    color: white;
+    text-decoration: none;
+    float: right;
+}
+
+.model3 {
+    /* Hidden by default */
+    display: none;
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.model3 .model-content h1 {
+    margin-bottom: 10px;
+}
+
+.model3 .model-content label,
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=password],
+textarea {
+    margin: 5px 5px 10px 0px;
+}
+
+.model3 .model-content textarea {
+    padding: 12px 20px;
+}
+
+.model3 p {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+}
+
+/* model Content/Box */
+.model-content {
+    background: rgb(107, 3, 125);
+    background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+    padding: 30px;
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 40%;
+    /* Could be more or less, depending on screen size */
+}
+
+.model-content h1 {
+    text-align: center;
+    color: white;
+    margin-top: 50px;
+}
+
+.hclose {
+    color: white;
+    position: relative;
+    float: right;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+        display: block;
+        float: none;
+    }
+
+    .cancelbtn {
+        width: 100%;
+    }
+}
+
+.submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px solid white;
+    padding: 0 20px;
+}
+
+.submit-button a,
+.submit-button a:hover {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.button-b {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: white;
+    border: none;
+    color: #36013F;
+    text-align: center;
+    font-size: 1rem;
+    padding: 15px;
+    width: 180px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 20px 20px 0;
+}
+
+.button-b span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button-b span:after {
+    content: '→';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button-b:hover span {
+    padding-right: 25px;
+}
+
+.button-b:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.outer-line {
+    border: 2px solid white;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    text-align: center;
+}
+
+.radio,
+.checkboxes,
+.checkboxes-2 {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+.checkbox-label {
+    margin-bottom: 10px;
+}
+
+.helptext,
+ul>li {
+    color: white;
+}
+
+.tooltipt {
+    position: relative !important;
+}
+
+.tooltipt .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    opacity: 2;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltipt:hover .tooltiptext {
+    visibility: visible;
+}
+
+/**********************************************************************************************************************************************/
+.footer {
+    color: white;
+    background: rgb(107, 3, 125);
+    background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+    display: flex;
+    font-family: var(--font);
+}
+
+.footer1-1 {
+    margin-top: 50px;
+}
+
+.footer1-1 .p2 {
+    color: white;
+}
+
+.footer2-1 {
+    background-color: white;
+    color: #36013F;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.footer2-2 a {
+    background-image: linear-gradient(to right,
+            white,
+            white 50%,
+            white 50%);
+    background-size: 200% 100%;
+    background-position: -100%;
+    display: inline-block;
+    padding: 5px 0;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+}
+
+.footer2-2 a:before {
+    content: '';
+    background: white;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.footer2-2 a:hover {
+    background-position: 0;
+}
+
+.footer2-2 a:hover::before {
+    width: 100%;
+}
+
+hr {
+    margin: 0;
+}
+
+.copy-rights {
+    background: rgb(107, 3, 125);
+    background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+    text-align: center;
+    font-family: var(--font);
+    color: white;
+    border-top: 1px solid white;
+}
+
+.copy-rights p {
+    margin: 0;
+}
+
+@media screen and (min-width: 1024px) {
+
+    .sidenav {
+        display: none;
+    }
+
+    .nav-bar {
+        justify-content: space-evenly;
+    }
+
+    .nav-bar img {
+        height: 100px;
+        width: 100px;
+    }
+
+    .nav-bar-1,
+    .nav-bar-2,
+    .nav-bar-3 {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .nav-bar-2 {
+        width: 50%;
+        justify-content: space-evenly;
+    }
+
+    .nav-bar-3 {
+        justify-content: space-evenly;
+    }
+
+    .nav-bar-3 {
+        width: 10%;
+    }
+
+    .header h1 {
+        font-size: 3.5rem;
+    }
+
+    .model-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+    }
+
+    .close1,
+    .close2 {
+        font-size: 1.7rem;
+    }
+
+    .close-button {
+        margin-bottom: 20px;
+    }
+
+    .hclose {
+        font-size: 2rem;
+    }
+
+    .footer {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .footer1,
+    .footer2 {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .footer1 {
+        justify-content: space-evenly;
+        margin-bottom: 70px;
+    }
+
+    .footer1-1 .p1 {
+        font-size: 2rem;
+        margin-top: 0;
+    }
+
+    .footer2 {
+        justify-content: space-evenly;
+        margin-bottom: 70px;
+    }
+
+    .footer2-1 {
+        margin-left: 40px;
+        margin-top: 50px;
+    }
+
+    .footer2-1 img {
+        height: 150px;
+        width: 150px;
+    }
+
+    .footer2-1 p {
+        margin-top: 10px;
+        font-size: 1.7rem;
+        margin-left: 15px;
+        line-height: 30px;
+    }
+
+    .footer2-2 {
+        margin: 0 20px;
+        width: 60%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .footer2-3 {
+        width: 15%;
+    }
+
+    .copy-rights {
+        padding: 20px 0;
+    }
+}
+
+@media screen and (max-width: 820px) {
+    .nav-bar {
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-bar-2,
+    .nav-bar-3 {
+        display: none;
+    }
+
+    .nav-bar img {
+        height: 80px;
+        width: 80px;
+        margin-left: 15px;
+    }
+
+    .side-bar {
+        background-color: #36013f;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+    }
+
+    .sidenav {
+        font-family: var(--font);
+        height: 100%;
+        /* 100% Full-height */
+        width: 0;
+        /* 0 width - change this with JavaScript */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Stay on top */
+        top: 0;
+        /* Stay at the top */
+        right: 0;
+        background-color: #36013F;
+        /* Black*/
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+        padding-top: 60px;
+        /* Place content 60px from the top */
+        transition: 0.5s;
+        /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 8px 8px 8px 25px;
+        text-decoration: none;
+        font-size: 25px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+        padding: 20px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .close-button {
+        margin-bottom: 20px;
+    }
+
+    .hclose {
+        font-size: 1.7rem;
+        margin-right: 10px;
+    }
+
+    .model-content {
+        width: 70%;
+        padding: 10px;
+    }
+
+    .model-content h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .model3 p {
+        margin-bottom: 10px;
+    }
+
+    .radio,
+    .checkboxes,
+    .checkboxes-2 {
+        flex-direction: column;
+    }
+
+    .radio>div,
+    .checkboxes>div,
+    .checkboxes-2>div {
+        margin: 5px 0;
+    }
+
+    .checkboxes-2 {
+        margin-top: -15px;
+    }
+
+    .submit-button a {
+        width: 100%;
+    }
+
+    .close1,
+    .close2 {
+        font-size: 1.4rem;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footer1-1 {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .footer1-1 .p1 {
+        font-size: 1.5rem;
+    }
+
+    .footer2-1 {
+        justify-content: center;
+    }
+
+    .footer2-1 img {
+        height: 160px;
+        width: 160px;
+    }
+
+    .footer2-1 p {
+        margin-top: 10px;
+        font-size: 1.4rem;
+        line-height: 22px;
+        margin-left: 10px;
+    }
+
+    .footer2-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .footer2-2 a {
+        margin-bottom: 10px;
+    }
+
+    .footer2-3 {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 30px;
+    }
+
+    .copy-rights {
+        padding: 20px 0;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+    .nav-bar {
+        align-items: center;
+    }
+
+    .nav-bar-2,
+    .nav-bar-3 {
+        display: none;
+    }
+
+    .nav-bar img {
+        height: 70px;
+        width: 70px;
+        margin-left: 10px;
+    }
+
+    .side-bar {
+        background-color: #36013f;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+    }
+
+    .sidenav {
+        font-family: var(--font);
+        height: 100%;
+        /* 100% Full-height */
+        width: 0;
+        /* 0 width - change this with JavaScript */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Stay on top */
+        top: 0;
+        /* Stay at the top */
+        right: 0;
+        background-color: #36013F;
+        /* Black*/
+        overflow-x: hidden;
+        /* Disable horizontal scroll */
+        padding-top: 100px !important;
+        /* Place content 60px from the top */
+        transition: 0.5s;
+        /* 0.5 second transition effect to slide in the sidenav */
+    }
+
+    /* The navigation menu links */
+    .sidenav a {
+        padding: 8px 8px 8px 28px;
+        text-decoration: none;
+        font-size: 1.3rem;
+        color: white;
+        display: block;
+        transition: 0.3s;
+    }
+
+    /* When you mouse over the navigation links, change their color */
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+
+    /* Position and style the close button (top right corner) */
+    .sidenav .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+    }
+
+    /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+    #main {
+        transition: margin-left .5s;
+        padding: 20px;
+    }
+
+    /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    .header h1 {
+        font-size: 1.7rem;
+    }
+
+    .header__center h1 {
+        font-size: 1.5rem;
+    }
+
+    .model-content {
+        width: 90%;
+    }
+
+    .model-content h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .close-button {
+        margin-bottom: 20px;
+    }
+
+    .hclose {
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+
+    .submit-button {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .close1,
+    .close2 {
+        font-size: 1.2rem;
+    }
+
+    .footer {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footer1-1 {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .footer1-1 .p1 {
+        font-size: 1.2rem;
+    }
+
+    .footer1-1 .p2 {
+        font-size: 0.8rem;
+    }
+
+    .footer2-1 {
+        justify-content: center;
+    }
+
+    .footer2-1 img {
+        height: 140px;
+        width: 140px;
+
+    }
+
+    .footer2-1 p {
+        font-size: 1.4rem;
+        margin-top: 10px;
+        margin-left: 10px;
+        line-height: 22px;
+    }
+
+    .footer2-2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .footer2-2 a {
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .footer2-3 {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-bottom: 30px;
+    }
+
+    .copy-rights {
+        padding: 10px 5px 10px;
+    }
+
+    .copy-rights p {
+        font-size: 0.9rem;
+    }
+}

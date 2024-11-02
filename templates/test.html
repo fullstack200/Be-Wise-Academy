@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/test.css' %}">
+
+    <style>
+    
+    </style>
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            <div class="questions">
+                <div class="header">
+                    <h1>Enter a username [Combination of letters, numbers and special characters]</h1>
+                </div>
+                <div class="options">
+                    <input type="text" name="studentName" id="studentName" placeholder="Your username">
+                </div>
+            </div>
+            {% for i in quizQuestions %}
+            <div class="questions">
+                <div class="header">
+                    <h1>{{ i.question }}</h1>
+                    {% if i.questionImage %}
+                    <img class="qimg" src="{{ i.questionImage.url }}" alt="">
+                    {% endif %}
+                </div>
+                <div class="options">
+                    <input type="text" name="{{ i.nameTag }}" id="{{ i.nameTag }}" placeholder="Your answer...">
+                </div>
+            </div>
+            {% endfor %}
+            <div class="submit-button">
+                <button type="submit" class="button-b" style="vertical-align:middle"><span>Submit </span></button>
+            </div>
+        </form>
+    </div>
+    <script>
+        var formSubmitting = false;
+        var setFormSubmitting = function () { formSubmitting = true; };
+
+        window.onload = function () {
+            window.addEventListener("beforeunload", function (e) {
+                if (formSubmitting) {
+                    return undefined;
+                }
+
+                var confirmationMessage = 'It looks like you have been editing something. '
+                    + 'If you leave before saving, your changes will be lost.';
+
+                (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+            });
+        };
+
+
+        // Disable Copy
+        document.addEventListener('copy', e => {
+            e.preventDefault()
+        })
+        // Disable Paste
+        document.addEventListener('paste', e => {
+            e.preventDefault()
+        })
+
+        document.addEventListener('contextmenu', e => {
+            e.preventDefault()
+        })
+
+    </script>
+    {% endblock content %}
+
+</body>
+
+</html>

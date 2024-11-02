@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/price.css' %}">
+
+    <!-- JS File link -->
+    <script src="{% static './static/js/reveal.js' %}"></script>
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <div class="header">
+            <h1>Our Prices</h1>
+        </div>
+        <h2><i class="fa-solid fa-circle-info" style="color: #36013f;"></i>&nbsp;&nbsp;All prices are charged on monthly
+            bases.</h2>
+        <div class="choose">
+            <a href="#7">
+                <div><b>IGCSE</b></div>
+            </a>
+            <a href="#8">
+                <div><b>IB</b></div>
+            </a>
+            <a href="#9">
+                <div><b>ICSE</b></div>
+            </a>
+            <a href="#10">
+                <div><b>CBSE</b></div>
+            </a>
+        </div>
+        <div class="header__center reveal">
+            <h1 id="7">IGCSE</h1>
+        </div>
+        <div class="container reveal">
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 7</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in igcse7 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in igcse7 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 8</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in igcse8 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in igcse8 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 9</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in igcse9 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in igcse9 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 10</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in igcse10 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in igcse10 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header__center reveal">
+            <h1 id="8">International<br>Baccalaureate</h1>
+        </div>
+        <div class="container reveal">
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 7</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in ib7 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in ib7 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 8</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in ib8 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in ib8 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 9</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in ib9 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in ib9 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 10</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in ib10 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in ib10 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header__center reveal">
+            <h1 id="9">ICSE</h1>
+        </div>
+        <div class="container reveal">
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 7</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in icse7 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in icse7 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 8</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in icse8 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in icse8 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 9</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in icse9 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in icse9 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 10</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in icse10 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in icse10 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header__center reveal">
+            <h1 id="10">CBSE</h1>
+        </div>
+        <div class="container reveal">
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 7</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in cbse7 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in cbse7 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 8</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in cbse8 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in cbse8 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 9</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in cbse9 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in cbse9 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card grade-box">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Grade 10</h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="sub-container">
+                            <div>
+                                {% for i in cbse10 %}
+                                <p>{{ i.subject }}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="vl"></div>
+                            <div>
+                                {% for i in cbse10 %}
+                                <p>{{ i.fee }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+.nav-bar-1 p {
+    margin-bottom: 16px;
+}
+
+.file-list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 25px 0;
+}
+
+.file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #36013F;
+}
+
+.file p {
+    color: gray;
+}
+
+.file span {
+    color: #36013F;
+}
+
+.file i {
+    cursor: pointer;
+}
+
+
+@media screen and (min-width: 1024px) {
+
+    .file {
+        width: 50%;
+        padding: 10px 150px;
+    }
+
+    .file span, .file i {
+        font-size: 2rem;
+    }
+
+    .cstatus{
+        font-size: 2rem;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .file {
+        width: 50%;
+        padding: 10px 100px;
+    }
+
+    .file span, .file i {
+        font-size: 1.5rem;
+    }
+
+    .cstatus{
+        font-size: 1.5rem;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+
+    .file {
+        width: 80%;
+        padding: 10px 0px;
+    }
+
+    .file span, .file i {
+        font-size: 1.2rem;
+    }
+
+    .cstatus{
+        font-size: 0.9rem;
+    }
+}

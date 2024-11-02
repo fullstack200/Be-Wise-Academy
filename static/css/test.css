@@ -1,0 +1,94 @@
+.main-body{
+    margin-bottom: 20px;
+}
+
+.nav-bar-1 p {
+    margin-bottom: 16px;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+}
+
+.options {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+input[type=submit] {
+    background-color: rgb(107, 3, 125);
+    color: white;
+    text-align: center;
+    width: 150px;
+    padding:20px 10px;
+    border-style: none;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover{
+    background-color: rgba(54, 1, 63, 1);
+    transition: 1s;
+}
+
+.submit-button{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+input[type=text] {
+    width: 50%;
+    height: 50px;
+    margin: 30px;
+    padding: 0 20px;
+}
+
+.button-b{
+    background-color: #36013F;
+    color:white;
+}
+
+@media screen and (min-width: 1024px) {
+    .header h1{
+        font-size: 1.5rem !important;
+    }
+
+    .qimg{
+        height:300px;
+        width:300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header h1{
+        font-size: 1.2rem !important;
+    }
+
+    .button-b{
+        width: 15% !important;
+    }
+
+    .qimg{
+        height:200px;
+        width:200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header h1{
+        font-size: 1rem !important;
+    }
+
+    .button-b{
+        width: 25% !important;
+    }
+
+    .qimg{
+        height:150px;
+        width:150px;
+    }
+}

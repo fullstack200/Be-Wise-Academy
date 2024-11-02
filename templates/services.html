@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/services.css' %}">
+
+    <!-- JS File link -->
+    <script src="{% static './static/js/reveal.js' %}"></script>
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <div class="header">
+            <h1>Courses & Services</h1>
+        </div>
+        <div class="overview">
+            <p><b>Our Curriculum Overview</b></p>
+            <h1>A Commitment to Excellence</h1>
+            <hr style="background-color:#36013F; height:2px;width:60px;">
+            <div class="main-para reveal">
+                <div class="para1">
+                    <p>BeWise Academy aims at offering all our students a broad and balanced curriculum that provides
+                        rewarding and stimulating activities to prepare them for the best social and cultural life.</p>
+                </div>
+                <div class="para2">
+                    <p>Whether it is our books or hands-on training, we make sure each student gets personal attention
+                        to
+                        cope up and flourish in every subject for better scores and a brighter future.</p>
+                </div>
+            </div>
+        </div>
+        <div class="header__center reveal">
+            <h1>Curriculum Offered</h1>
+        </div>
+        <div class="curriculum reveal">
+            <div class="first-row">
+                <div><img id="camb" src="{% static './static/content/cambridge.jpg' %}" alt="cambridge">
+                    <p id="camb-p">Cambridge - IGCSE, AS and A levels</p>
+                </div>
+                <div id="ib"><img src="{% static './static/content/ib.png' %}" alt="ib">
+                    <p>International Baccalaureate - IB MPY and IB DP</p>
+                </div>
+            </div>
+            <div class="second-row">
+                <div><img src="{% static './static/content/icse.png' %}" alt="icse">
+                    <p>Indian Certificate of Secondary Education [ICSE]</p>
+                </div>
+                <div><img id="cbse" src="{% static './static/content/cbse.png' %}" alt="cbse">
+                    <p>Central Board of Secondary Education [CBSE]</p>
+                </div>
+            </div>
+        </div>
+        <div class="header__center reveal">
+            <h1>Services Offered</h1>
+        </div>
+        <div class="services reveal">
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/group.jpg' %}" alt="">
+                <div>
+                     <p id="heading" >Group Tutoring</p>
+                <p id="desc">Parents commonly express concerns about group tutoring, fearing that a consistent pace may disadvantage slower learners. To address this, we've effectively countered these worries by maintaining an optimal 8:1 student-to-teacher ratio, achieving outstanding results. This ratio not only ensures individualized attention, making the learning process more meaningful for students, but also sets us apart. Visit our center today, engage with our Academic Counselor, and discover firsthand our innovative approach to education.
+</p>
+                </div>
+               
+            </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/private.png' %}" alt="">
+                <div>
+                    <p id="heading" >Online 1 on 1 Tutoring</p>
+                    <p id="desc">Unbelievably, we've mastered the art of online tutoring. Having clocked over 20,000 hours of virtual classes since 2018, we've become specialists in Cambridge IGCSE and IB curriculums. Beyond excelling in Math and Science, we've triumphed in delivering effective online tuition for subjects like English, Spanish, and French. With a team of the right tutors tailored for your child's needs, our charging system is based on an hourly rate. Reach out to our student counselor today for a deeper dive into what we offer.
+</p>
+                </div>
+               
+
+            </div>
+        </div>
+        <div class="header__center reveal">
+            <h1>Subjects Taught</h1>
+        </div>
+        <div class="s-subjects reveal">
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/computer.png' %}" alt="computer">
+                <div>
+                    <p id="heading" >Computer Science</p>
+                <p id="desc">Explore the world of Computer Science with our tutoring! Our experienced tutors cover coding languages, algorithms, and problem-solving, tailored to your pace. Whether you're diving into Python or venturing into AI, we're here to simplify and strengthen your skills. Join us for an engaging journey into the heart of technology!</p>
+           
+                </div>
+                </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/math.jpg' %}" alt="math">
+                <div>
+                    <p id="heading" >Mathematics</p>
+                <p id="desc">Dive into the world of numbers and problem-solving with our Math tutoring! Our dedicated tutors are here to demystify mathematical concepts, from basic arithmetic to advanced calculus. Whether you're working on algebraic equations or tackling geometry problems, our tailored sessions cater to your individual needs and learning style. Join us to build a strong foundation, enhance your mathematical skills, and discover the joy of conquering mathematical challenges. Let's make math not just a subject, but an exciting journey of discovery and mastery!</p>
+      
+                </div>
+                      </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/physics.jpg' %}" alt="physics">
+                <div>
+                    <p id="heading" >Physics</p>
+                <p id="desc">Embark on a captivating journey into the realm of Physics with our tutoring services! Our experienced tutors make complex concepts comprehensible, covering everything from classical mechanics to quantum physics. Whether you're delving into Newton's laws or exploring the mysteries of the cosmos, our tailored sessions ensure a solid grasp of fundamental principles. Join us to unravel the wonders of the physical world, enhance problem-solving skills, and excel in your Physics studies. Let's make the fascinating world of Physics accessible and enjoyable together!
+                </p>
+                </div>
+            </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/chemistry.jpg' %}" alt="chemistry">
+                <div>
+                    <p id="heading" >Chemistry</p>
+                <p id="desc">Unlock the mysteries of Chemistry with our tutoring services! Our experienced tutors guide you through the intricacies of chemical reactions, molecular structures, and the periodic table. Whether you're navigating the fundamentals of stoichiometry or delving into organic chemistry, our tailored sessions are designed to simplify complex concepts. Join us to explore the fascinating world of atoms and molecules, enhance your problem-solving skills, and excel in your Chemistry studies. Let's make Chemistry an engaging adventure of discovery and understanding!
+                </p>
+                </div>
+            </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/biology.jpg' %}" alt="biology">
+                <div>
+                     <p id="heading" >Biology</p>
+                <p id="desc">
+Embark on a journey of life sciences with our Biology tutoring! Our experienced tutors are here to unravel the wonders of living organisms, from cellular biology to ecosystems. Whether you're exploring genetics, dissecting the intricacies of human anatomy, or diving into environmental biology, our tailored sessions cater to your unique learning needs. Join us to deepen your understanding of the natural world, enhance your analytical skills, and excel in Biology. Let's make the study of life an engaging and enlightening experience together!</p>
+           
+                </div>   
+            </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/english.png' %}" alt="english">
+               <div>
+                    <p id="heading" >English</p>
+                <p id="desc">Immerse yourself in the art of language and literature with our English tutoring! Our dedicated tutors are here to guide you through the nuances of grammar, literature analysis, and effective communication. Whether you're delving into classic literature, perfecting your essay writing skills, or honing your understanding of language mechanics, our tailored sessions are designed to elevate your proficiency. Join us to explore the beauty of words, enhance your critical thinking, and excel in English. Let's make the study of language an enjoyable and enriching journey together!
+                </p>
+               </div>
+            </div>
+            <div class="spe-sub-ser reveal">
+                <img src="{% static './static/content/hindi.jpg' %}" alt="hindi">
+              <div>
+                   <p id="heading" >हिंदी</p>
+                <p id="desc">
+               Embark on a linguistic and cultural exploration with our Hindi tutoring services! Our proficient tutors are here to assist you in mastering the Hindi language, covering everything from basic vocabulary to advanced conversational skills. Whether you're navigating grammar rules or immersing yourself in Hindi literature, our tailored sessions are designed to suit your individual learning preferences. Join us to deepen your connection with Hindi, enhance your language proficiency, and embrace the richness of Indian culture. Let's make learning Hindi a vibrant and rewarding experience together!
+                </p>
+              </div>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+
+</body>
+
+</html>

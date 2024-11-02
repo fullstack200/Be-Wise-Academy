@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <style>
+        .status h1,
+        .status h3,
+        .status p {
+            color: #36013F;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        h3,
+        p {
+            text-align: center;
+        }
+
+        @media screen and (min-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 1rem;
+            }
+
+            h3 {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media screen and (max-width: 820px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            h3 {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+    {% endblock %}
+</head>
+
+<body>
+    <div class="status">
+        {% block content %}
+        {% if status == True %}
+        <h1>Payment Done &nbsp;<i class="fa-solid fa-circle-check" style="color: #0ac220;"></i></h1>
+        <h3>Thank you</h3>
+        {% else %}
+        <h1>Payment unsuccessful &nbsp;<i class="fa-solid fa-circle-xmark" style="color: #fe0606;"></i></h1>
+        <h3>Please contact Admin if amount is debited from your account to confirm.</h3>
+        <p>Go back to <a href="{% url 'payment' %}">Payment's</a> page.</p>
+        {% endif %}
+    </div>
+    {% endblock content %}
+</body>
+
+</html>

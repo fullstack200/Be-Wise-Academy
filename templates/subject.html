@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/subject.css' %}">
+    {% endblock %}
+    
+    <style>
+        
+    </style>
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <div class="header">
+            {% for i in list %}
+            {% if forloop.first %}
+            <h1>{{i.subjectName}}</h1>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="file-list">
+            {% if not list %}
+            <p class="cstatus">Content will be added soon.</p>
+            {% else %}
+            {% for i in list %}
+            <div class="file">
+                <p><span><b>{{i.topicName}}</b></span><br>Uploaded on : {{i.uploaded_on}}</p>
+                <a href="{{i.document.url}}" download><i class="fa-solid fa-file-arrow-down"
+                        style="color: #36013f;"></i></a>
+            </div>
+            {% endfor %}
+            {% endif %}
+         
+        </div>
+    </div>
+    {% endblock content %}
+
+</body>
+
+</html>
