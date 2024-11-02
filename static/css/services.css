@@ -1,0 +1,309 @@
+:root {
+    --font: 'Lato', sans-serif;
+}
+
+.nav-bar-1 p {
+    margin-bottom: 16px !important;
+}
+
+#heading{
+    color:#36013F;
+    margin:10px 0;
+    font-weight: 900;
+}
+
+.main-para {
+    display: flex;
+}
+
+.curriculum {
+    display: flex;
+    margin: 50px 0;
+}
+
+.first-row, .second-row {
+    display: flex;
+}
+
+.s-subjects {
+    display: flex;
+}
+
+.s-subjects, .services {
+    height: 100%;
+    flex-direction: column;
+    color: black;
+}
+
+.spe-sub-ser {
+    display: flex;
+}
+
+.spe-sub-ser span {
+    color: #36013F;
+    font-weight: 900;
+}
+
+@media screen and (min-width: 1024px) {
+
+    #heading{
+        font-size: 1.8rem;
+    }
+
+    .overview {
+        margin-left: 50px;
+        margin-top: 100px;
+    }
+
+    .overview h1 {
+        margin-top: 10px;
+        font-size: 3rem;
+    }
+
+    .main-para {
+        flex-direction: row;
+        justify-content: space-evenly;
+        color: grey;
+        margin-bottom: 50px;
+    }
+
+    .para1, .para2 {
+        margin: 20px 50px;
+    }
+
+    .curriculum {
+        flex-direction: column;
+        align-items: center;
+        color: #36013F;
+    }
+
+    #camb {
+        width: 400px
+    }
+
+    #cbse {
+        margin-left: 0px;
+    }
+
+    .curriculum img {
+        height: 200px;
+        width: 200px;
+    }
+
+    .curriculum p {
+        font-size: 1.2rem;
+    }
+
+    .first-row, .second-row {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .second-row {
+        margin-right: 50px;
+    }
+
+    .s-subjects, .services {
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 70px 200px 70px 30px;
+    }
+
+    .spe-sub-ser {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .spe-sub-ser img {
+        height: 430px;
+        width: 400px;
+        border-radius: 3px;
+        margin-bottom: 50px;
+    }
+
+    .spe-sub-ser span {
+        font-size: 2.5rem;
+    }
+
+    .spe-sub-ser p {
+        width: 500px;
+        text-align: justify;
+    }
+}
+
+@media screen and (max-width: 820px) {
+
+    #heading{
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    #desc{
+        padding:0 20px;
+        text-align: left;
+    }
+
+    .overview {
+        margin-left: 20px;
+        margin-top: 50px;
+    }
+
+    .main-para {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding-right: 30px;
+    }
+
+    .curriculum {
+        flex-direction: column;
+    }
+
+    #camb {
+        margin-left: 30px;
+        width: 400px;
+    }
+
+    #camb-p {
+        margin-left: 100px;
+    }
+
+    #cbse {
+        margin-left: 80px;
+    }
+
+    .curriculum img {
+        height: 170px;
+        width: 170px;
+        margin-left: 90px;
+    }
+
+    .first-row, .second-row {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .first-row>div, .second-row>div {
+        margin-bottom: 50px;
+    }
+
+    .s-subjects, .services {
+        margin-top: 50px;
+    }
+
+    .spe-sub-ser {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .spe-sub-ser img {
+        height: 300px;
+        width: 300px;
+        border-radius: 3px;
+    }
+
+    .spe-sub-ser span {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    #heading{
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    #desc{
+        text-align: left;
+    }
+
+    .overview h1{
+        font-size: 1.7rem;
+    }
+
+    .main-para {
+        display: flex;
+        flex-direction: column;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .curriculum {
+        flex-direction: column;
+    }
+
+    #camb {
+        margin-left: 0 !important;
+        width: 280px;
+    }
+
+    #camb-p {
+        margin-left: 30px;
+    }
+
+    #cbse {
+        margin-left: 90px;
+    }
+
+    .curriculum img {
+        height: 150px;
+        width: 150px;
+        margin-left: 100px;
+    }
+
+    .first-row, .second-row {
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .first-row>div, .second-row>div {
+        margin-bottom: 50px;
+    }
+
+    .first-row>div>p, .second-row>div>p {
+        padding:0 10px;
+    }
+
+    .s-subjects, .services {
+        margin-top: 50px;
+    }
+
+    .spe-sub-ser {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .spe-sub-ser p {
+        margin: 10px 15px;
+        text-align: left;
+    }
+
+    .spe-sub-ser img {
+        height: 250px;
+        width: 250px;
+        border-radius: 3px;
+    }
+
+    .spe-sub-ser span {
+        font-size: 1.5rem;
+        text-align: center !important;
+    }
+}

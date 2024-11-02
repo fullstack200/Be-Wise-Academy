@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeWise Academy</title>
+
+    <!-- Google Font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap" rel="stylesheet">
+
+    <!-- Favicon link -->
+    <link rel="icon" href="{% static './static/content/favicon.ico' %}">
+
+    <!-- Font Awsome Icons link -->
+    <script src="https://kit.fontawesome.com/562a44d30d.js" crossorigin="anonymous"></script>
+
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/base.css' %}">
+
+    <!-- JS File link -->
+    <script src="{% static './static/js/sidemenu.js' %}"></script>
+    <script src="{% static './static/js/reveal.js' %}"></script>
+
+    {% block extrahead %}{% endblock %}
+
+</head>
+
+<body>
+    <div class="nav-bar">
+        <a href="{% url 'home' %}" style="text-decoration:none; color:#36013F;">
+            <div class="nav-bar-1">
+                <img src="{% static './static/content/Logo.png' %}" alt="Logo">
+                <p><b>BeWise<br> Academy</b></p>
+            </div>
+        </a>
+
+        <div class="nav-bar-2">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'services' %}">Services</a>
+            <a href="{% url 'price' %}">Pricing</a>
+            <a href="{% url 'resources' %}">Resources</a>
+            <a href="{% url 'payment' %}">Payment</a>
+            <a href="{% url 'blogList' %}">Blogs</a>
+            <a href="{% url 'contact' %}">Contact Us</a>
+        </div>
+        
+        <div class="nav-bar-3">
+            <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ=="><i class="fa-brands fa-instagram" style="color:#36013F"></i></a>
+        </div>
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'price' %}">Pricing</a>
+            <a href="{% url 'services' %}">Services</a>
+            <a href="{% url 'resources' %}">Resources</a>
+            <a href="{% url 'payment' %}">Payment</a>
+            <a href="{% url 'blogList' %}">Blogs</a>
+            <a href="{% url 'contact' %}">Contact Us</a>
+
+            <div style="display:flex; margin-top: 30px;">
+                <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ=="><i class="fa-brands fa-instagram" style="color:white"></i></a>
+            </div>
+        </div>
+       
+        <div class="side-bar">
+            <!-- Use any element to open the sidenav -->
+            <span id="side-menu-button" onclick="openNav()"><i class="fa-solid fa-bars"
+                    style="color:white;"></i></span>
+        </div>
+    </div>
+
+
+    {% block content %}
+    {% endblock content %}
+
+    <div class="footer">
+        <div class="footer1">
+            <div class="footer1-1">
+                <p class="p1"><b>BeWise Academy</b></p>
+                <p class="p2">1643/22/A/B, Teachers colony,<br> HBR Layout 2nd Block, Stage 1, <br>Bengaluru
+                    560043</p>
+            </div>
+            <div class="footer2-1">
+                <img src="{% static './static/content/Logo.png' %}" alt="logo">
+                <p><b>BeWise<br>Academy</b></p>
+            </div>
+        </div>
+        <div class="footer2">
+            <div class="footer2-2">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'services' %}">Services</a>
+                <a href="{% url 'price' %}">Pricing</a>
+                <a href="{% url 'resources' %}">Resources</a>
+                <a href="{% url 'blogList' %}">Blogs</a>
+                <a href="{% url 'contact' %}">Contact Us</a>
+            </div>
+            <div class="footer2-3">
+                <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ==" class="footer-links"><i class="fa-brands fa-instagram"
+                        style="color: white; font-size: 1.5rem;"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="copy-rights">
+        <p>© <span id="current-year"></span> Official Website of Bewise Academy. All rights reserved. Powered by
+            fullstackdeveloper404.</p>
+    </div>
+    <script>
+    // Function to close the popup
+    function closePopup() {
+        document.querySelector('.model3').style.display = 'none';
+        // Set a flag in localStorage to indicate that the popup has been displayed
+        localStorage.setItem('popupDisplayed', 'true');
+    }
+
+    // Function to display the popup after a delay
+    function displayPopup() {
+        console.log("Function called")
+        // Check if the popup has already been displayed
+        if (localStorage.getItem('popupDisplayed') !== 'true') {
+            // Display the popup after a delay of 10 seconds
+            setTimeout(function() {
+                document.querySelector('.model3').style.display = 'block';
+            }, 10000); // 10000 milliseconds = 10 seconds
+        }
+    }
+
+    // Call the function to display the popup after the page has loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        displayPopup();
+    });
+    
+        const d = new Date();
+        let year = d.getFullYear();
+        document.getElementById("current-year").innerHTML = year;
+</script>
+</body>
+
+</html>

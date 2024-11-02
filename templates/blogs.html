@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/blogs.css' %}">
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <div class="header">
+            <h1>{{blog.blogTitle}}</h1>
+        </div>
+        <div class="blog-div">
+            <img src="{{blog.blogImage.url}}" alt="blog">
+            <p>{{blog.blogPara}}&nbsp;&nbsp;<span><i>-By {{blog.blogAuthor}}</i></span></p>
+        </div>
+    </div>
+
+    {% endblock content %}
+
+</body>
+
+</html>

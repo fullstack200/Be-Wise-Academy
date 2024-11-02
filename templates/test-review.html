@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/test-review.css' %}">
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <form action=" ">
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.0.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.0 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q1}}">
+                    {% elif boolList.0 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q1}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.1.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.1 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q2}}">
+                    {% elif boolList.1 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q2}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.2.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.2 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q3}}">
+                    {% elif boolList.2 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q3}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.3.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.3 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q4}}">
+                    {% elif boolList.3 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q4}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.4.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.4 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q5}}">
+                    {% elif boolList.4 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q5}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.5.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.5 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q6}}">
+                    {% elif boolList.5 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q6}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.6.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.6 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q7}}">
+                    {% elif boolList.6 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q7}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.7.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.7 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q8}}">
+                    {% elif boolList.7 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q8}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.8.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.8 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q9}}">
+                    {% elif boolList.8 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q9}}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="questions">
+                <div class="header">
+                    <h1>{{questions.9.question}}</h1>
+                </div>
+                <div class="options">
+                    {% if boolList.9 == True %}
+                    <i class="fa-solid fa-check correct-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="correct-input" value="{{result_object.q10}}">
+                    {% elif boolList.9 == None %}
+                    <p><b>Skipped</b></p>
+                    <input type="text" placeholder="Your answer..." class="skip" value=" ">
+                    {% else %}
+                    <i class="fa-solid fa-xmark wrong-icon"></i>
+                    <input type="text" placeholder="Your answer..." class="wrong-input" value="{{result_object.q10}}">
+                    {% endif %}
+                </div>
+            </div>
+
+        </form>
+    </div>
+    {% endblock content %}
+
+</body>
+
+</html>

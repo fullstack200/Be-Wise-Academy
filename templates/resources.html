@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/resources.css' %}">
+
+    <!-- JS File link -->
+    <script src="{% static './static/js/reveal.js' %}"></script>
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <div class="header">
+            <h1>Resources Centre</h1>
+        </div>
+        <h2><i class="fa-solid fa-circle-info" style="color: #36013f;"></i>&nbsp;&nbsp;Get subject wise articles,
+            documents, cheat-sheets for your reference.</h2>
+        <div class="sub-grp">
+            <div class="subjects reveal">
+                <a href="{% url 'computerScience' %}">
+                    <img src="{% static './static/content/computer.png' %}" alt="computer">
+                    <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i>&nbsp; Computer Science</h3>
+                </a>
+            </div>
+            <div class="subjects reveal">
+                <a href="{% url 'mathematics' %}">
+                    <img src="{% static './static/content/math.jpg' %}" alt="math">
+                    <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i>&nbsp; Mathematics</h3>
+                </a>
+            </div>
+            <div class="subjects reveal">
+                <a href="{% url 'physics' %}">
+                    <img src="{% static './static/content/physics.jpg' %}" alt="physics">
+                    <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i> &nbsp;Physics</h3>
+                </a>
+            </div>
+            <div class="subjects reveal">
+                <a href="{% url 'chemistry' %}">
+                    <img src="{% static './static/content/chemistry.jpg' %}" alt="chemistry">
+                    <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i> &nbsp;Chemistry</h3>
+                </a>
+            </div>
+            <div class="subjects reveal">
+                <a href="{% url 'biology' %}">
+                <img src="{% static './static/content/biology.jpg' %}" alt="biology">
+                <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i> &nbsp;Biology</h3>
+                </a>
+            </div>
+            <div class="subjects reveal">
+                <a href="{% url 'english' %}">
+                    <img src="{% static './static/content/english.png' %}" alt="english">
+                    <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i> &nbsp;English</h3>
+                </a>
+            </div>
+            <div class="subjects reveal">
+                <a href="{% url 'hindi' %}">
+                    <img src="{% static './static/content/hindi.jpg' %}" alt="hindi">
+                    <h3 style="color: #36013F;"><i class="fa-solid fa-folder"></i> &nbsp;हिंदी</h3>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endblock content %}
+
+</body>
+
+</html>

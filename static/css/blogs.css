@@ -1,0 +1,59 @@
+.nav-bar-1 p {
+    margin-bottom: 16px;
+}
+
+.blog-div span{
+    font-family: 'Times New Roman', Times, serif;
+    color:gray
+}
+
+@media screen and (min-width: 1024px) {
+
+    .blog-div img{
+        border-radius: 5px;
+        display: block;
+        width: 50%;
+        margin: 50px auto;
+    }
+
+    .blog-div p{
+        font-size: 1.1rem;
+        text-align: justify ;
+        margin: 0 50px 50px;
+        line-height: 1.8;
+    }
+ 
+}
+
+@media screen and (max-width: 820px) {
+    .blog-div img{
+        border-radius: 5px;
+        display: block;
+        width: 50%;
+        margin: 50px auto;
+    }
+
+    .blog-div p{
+        font-size: 1rem;
+        text-align: justify ;
+        margin: 0 50px 50px;
+        line-height: 1.8;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .blog-div  img{
+        border-radius: 5px;
+        display: block;
+        width: 90%;
+        margin: 50px auto;
+    }
+
+    .blog-div p{
+        font-size: 0.8rem;
+        text-align: justify ;
+        margin: 0 30px 50px;
+        line-height: 1.8;
+        word-spacing:2px;
+    }
+}

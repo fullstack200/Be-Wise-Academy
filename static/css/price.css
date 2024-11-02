@@ -1,0 +1,186 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.nav-bar-1 p {
+    margin-bottom: 16px;
+}
+
+.main-body h2{
+    text-align: center;
+    margin:50px 0;
+}
+
+.container {
+    margin: 50px 0;
+    display: flex;
+}
+
+.grade-box {
+    background: rgb(107, 3, 125);
+    background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.flip-card {
+    perspective: 1000px;
+    /* Remove this if you don't want the 3D effect */
+    cursor: pointer;
+    position: relative;
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    /* Safari */
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+    font-weight: 600;
+    font-size: 2.0em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style the back side */
+.flip-card-back {
+    transform: rotateY(180deg);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.vl {
+    border-left: 1px solid white;
+}
+
+@media screen and (min-width: 1024px) {
+
+    .choose {
+        display: none;
+    }
+
+    .container {
+        margin: 50px 0;
+        flex-direction: row;
+    }
+
+    .grade-box {
+        height: 320px;
+        width: 290px;
+        margin: 0 50px;
+    }
+
+    .grade-box h4 {
+        font-size: 1.5rem;
+        margin: 0;
+        margin-bottom: 40px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .choose {
+        display: none;
+    }
+
+    .grade-box {
+        height: 300px;
+        width: 250px;
+        margin: 0 40px 20px;
+        padding-bottom: 10px;
+    }
+
+    .container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .main-body h2{
+        font-size: 1.2rem;
+    }
+    
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .grade-box {
+        height: 250px;
+        width: 250px;
+        margin-bottom: 20px;
+    }
+
+    .choose {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 30px 0;
+    }
+
+    .choose a {
+        text-decoration: none;
+    }
+
+    .choose>a>div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 170px;
+        width: 170px;
+        color: #36013F;
+        background: rgb(107, 3, 125);
+        background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
+        color: white;
+        margin: 5px;
+        font-size: 1.5rem;
+        border-radius: 5px;
+    }
+
+    .flip-card-back{
+        font-size: 0.8rem;
+    }
+
+}

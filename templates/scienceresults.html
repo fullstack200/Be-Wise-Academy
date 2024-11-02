@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block extrahead %}
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="{% static './static/css/results.css' %}">
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block content %}
+    <div class="main-body">
+        <div class="header">
+            <h1>Results</h1>
+        </div>
+        <div class="context">
+            <p>10 Questions </p>
+            <p>|</p>
+            <p>1 hour </p>
+            <p>|</p>
+            <p>70% required to pass</p>
+        </div>
+        <div class="container">
+            <div class="sub-container-1">
+                <div>
+                    <div class="bar-container">
+                        <div class="circular-progress">
+                            <span class="progress-value">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <p><span><b>{{result_object.percentage}}%</b></span> &nbsp;&nbsp;correct({{result_object.correctAnswersCount}}/10)</p>
+                    <p>{{result_object.quizTime}}</p>
+                    <a href="{% url 'science-test-review' %}"><button><b>Review Questions</b></button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+     <script>
+      var a = {{ result_object.correctAnswersCount }};
+
+        let circularProgress = document.querySelector(".circular-progress"),
+            progressValue = document.querySelector(".progress-value");
+
+        let progressStartValue = 0,
+            progressEndValue = a,
+            speed = 100;
+
+        if (progressEndValue === 0) {
+            // Set a minimum duration for the animation (1 second)
+            setTimeout(() => {
+                circularProgress.style.background = `conic-gradient(#36013F 0deg, #ededed 0deg)`
+                progressValue.textContent = `0%`;
+            }, 1000);
+        } else {
+            let progress = setInterval(() => {
+                progressStartValue++;
+
+                progressValue.textContent = `${progressStartValue}%`
+                circularProgress.style.background = `conic-gradient(#36013F ${progressStartValue * 3.6}deg, #ededed 0deg)`
+
+                if (progressStartValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+    </script>
+    {% endblock content %}
+</body>
+
+
+</html>

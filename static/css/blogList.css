@@ -1,0 +1,90 @@
+.nav-bar-1 p {
+    margin-bottom: 16px;
+}
+
+.blog-list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 25px 0;
+}
+
+.blog {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #36013F;
+}
+
+.blog p {
+    color: gray;
+}
+
+.blog span {
+    color: #36013F;
+}
+
+.blog i {
+    cursor: pointer;
+}
+
+.tooltipt .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    opacity: 2;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 1rem !important;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -85px;
+}
+
+.tooltipt:hover .tooltiptext {
+    visibility: visible;
+}
+
+
+@media screen and (min-width: 1024px) {
+
+    .blog {
+        width: 50%;
+        padding: 10px 150px;
+    }
+
+    .blog span, .blog i {
+        font-size: 2rem;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .blog {
+        width: 50%;
+        padding: 10px 100px;
+    }
+
+    .blog span, .blog i {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .blog {
+        width: 80%;
+        padding: 10px 0px;
+    }
+
+    .blog span, .blog i {
+        font-size: 1.2rem;
+    }
+}
