@@ -122,7 +122,10 @@ def mathResultView(request):
     
     boolList = []
     for i in range(0,10):
-        if correctAnswers[i] == userAnswers[i]:
+        if userAnswers[i] is not None and correctAnswers[i].isalpha():
+            if correctAnswers[i].lower() == userAnswers[i].lower():
+                boolList.append(True)
+        elif correctAnswers[i] == userAnswers[i]:
             boolList.append(True)
 
     correctAnswersCount = boolList.count(True)
@@ -145,7 +148,10 @@ def scienceResultView(request):
     
     boolList = []
     for i in range(0,10):
-        if correctAnswers[i] == userAnswers[i]:
+        if userAnswers[i] is not None and correctAnswers[i].isalpha():
+            if correctAnswers[i].lower() == userAnswers[i].lower():
+                boolList.append(True)
+        elif correctAnswers[i] == userAnswers[i]:
             boolList.append(True)
 
     correctAnswersCount = boolList.count(True)
@@ -171,6 +177,9 @@ def mathQuestionsReview(request):
     for i in range(0,10):
         if userAnswers[i] == None:
             boolList.append(None)
+        elif correctAnswers[i].isalpha():
+            if correctAnswers[i].lower() == userAnswers[i].lower():
+                boolList.append(True)
         elif correctAnswers[i] == userAnswers[i]:
             boolList.append(True)
         else:
@@ -189,6 +198,9 @@ def scienceQuestionsReview(request):
     for i in range(0,10):
         if userAnswers[i] == None:
             boolList.append(None)
+        elif correctAnswers[i].isalpha():
+            if correctAnswers[i].lower() == userAnswers[i].lower():
+                boolList.append(True)
         elif correctAnswers[i] == userAnswers[i]:
             boolList.append(True)
         else:
