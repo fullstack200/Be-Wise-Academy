@@ -29,6 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 characters = string.ascii_letters + string.digits + string.punctuation
 SECRET_KEY = ''.join(secrets.choice(characters) for i in range(50))
 
+APPEND_SLASH = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,13 +41,17 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
 if ENVIRONMENT == 'production':
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
-    SECURE_SSL_REDIRECT = False
+    SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 3600 
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True 
     SECURE_HSTS_PRELOAD = True 
     SECURE_CONTENT_TYPE_NOSNIFF = True 
     SESSION_COOKIE_SECURE = True 
     CSRF_COOKIE_SECURE = True
+else:
+    SECURE_SSL_REDIRECT = False
+
+
 
 
 # Application definition
@@ -159,3 +164,9 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL="/static/"
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailersend.net'
+EMAIL_HOST_USER = 'MS_nAd11x@bewiseacademy.com'
+EMAIL_HOST_PASSWORD = '7TKpMxPnLJ2QJBUO'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
