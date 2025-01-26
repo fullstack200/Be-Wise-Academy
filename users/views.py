@@ -1,6 +1,8 @@
 from re import template
 from urllib import request
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+
 from django.views.generic import *
 from tutor.models import Resources
 from django.http import HttpResponseRedirect
@@ -16,11 +18,12 @@ def homePageView(request):
         eform = EnquiryForm(request.POST)
         if eform.is_valid():
             eform.save()
-            return HttpResponseRedirect("home")
+            return HttpResponseRedirect(reverse("home"))
      
     reviews = Feedback.objects.all()
-    first_review = reviews[0]
-    rest_reviews = reviews[1:]
+    first_review = reviews[0] if reviews else None
+    rest_reviews = reviews[1:] if len(reviews) > 1 else []
+
     
     return render(request, "homepage.html", {"enquiryForm":eform, "first_review":first_review,"rest_reviews":rest_reviews})
 
@@ -32,23 +35,27 @@ class AboutUsPageView(TemplateView):
 def contactView(request):
     eform = EnquiryForm()
     fform = FeedbackForm()
-     
+    
     if request.method == "POST":
+        # Check for 'enquiry' form submission
         if 'enquiry' in request.POST:
             eform = EnquiryForm(request.POST)
             if eform.is_valid():
                 eform.save()
-                return HttpResponseRedirect("contactUs/enquiry_confirm")
-            
+                return HttpResponseRedirect(reverse('econfirm'))
+            else:
+                return render(request, "contact.html", {"cenquiryForm": eform, "feedbackForm": fform})
+
+        # Check for 'feedback' form submission
         elif 'feedback' in request.POST:
             fform = FeedbackForm(request.POST)
-            data = request.POST
-            print(data)
             if fform.is_valid():
                 fform.save()
-                return HttpResponseRedirect("contactUs/feedback_confirm")
-  
-    return render(request, "contact.html", {"cenquiryForm":eform,"feedbackForm":fform})
+                return HttpResponseRedirect(reverse('fconfirm'))
+            else:
+                return render(request, "contact.html", {"cenquiryForm": eform, "feedbackForm": fform})
+
+    return render(request, "contact.html", {"cenquiryForm": eform, "feedbackForm": fform})
     
 class ServicesPageView(TemplateView):
     template_name = 'services.html'
@@ -62,10 +69,6 @@ class EvaluationPageView(TemplateView):
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'registration/signup.html'
-    reviews = Feedback.objects.all()
-    first_review = reviews[0]
-    rest_reviews = reviews[1:]
-    extra_context = {'first_review':first_review,'rest_reviews':rest_reviews}
     success_url = '/'
     
 class EnquiryFormConfirm(TemplateView):
