@@ -140,13 +140,7 @@ body {
     opacity: 1;
 }
 
-.subjects:hover {
-    transform: scale(1.1);
-    transition: 1s;
-    box-shadow: 5px 5px 5px 5px #888888;
-    margin-bottom: 30px;
-    margin-top: 30px;
-}
+
 
 /**********************************************************************************************************************************************/
 /* Full-width input fields */
