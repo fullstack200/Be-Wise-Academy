@@ -1,13 +1,11 @@
 from tokenize import Name
-from urllib import request
-from datetime import date, datetime
-import pytz
+from datetime import date
 import time
 from django.shortcuts import render
 from .models import *
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+
 from users.forms import *
 
 # Create your views here.
@@ -20,24 +18,8 @@ def chemistryView(request):
     docs = Resources.objects.filter(subjectName="Chemistry")
     return render(request, "subject.html", {'list': docs})
 
-def biologyView(request):
-    docs = Resources.objects.filter(subjectName="Biology")
-    return render(request, "subject.html", {'list': docs})
-
 def mathematicsView(request):
     docs = Resources.objects.filter(subjectName="Mathematics")
-    return render(request, "subject.html", {'list': docs})
-
-def computerScienceView(request):
-    docs = Resources.objects.filter(subjectName="Computer Science")
-    return render(request, "subject.html", {'list': docs})
-
-def englishView(request):
-    docs = Resources.objects.filter(subjectName="English")
-    return render(request, "subject.html", {'list': docs})
-
-def hindiView(request):
-    docs = Resources.objects.filter(subjectName="Hindi")
     return render(request, "subject.html", {'list': docs})
 
 def feeView(request):
@@ -95,7 +77,6 @@ class mathQuizView(CreateView):
         else:
             return self.form_invalid(form)
         
-    
 class scienceQuizView(CreateView):
     template_name = "test.html"
     model = scienceQuizResult
@@ -111,7 +92,6 @@ class scienceQuizView(CreateView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
-     
 
 def mathResultView(request):
     name = request.session['name']
@@ -172,7 +152,7 @@ def mathQuestionsReview(request):
     result_object = mathQuizResult.objects.get(studentName=name)
     correctAnswers = [i.correctAnswer for i in questions]
     userAnswers = [result_object.q1,result_object.q2,result_object.q3,result_object.q4,result_object.q5,result_object.q6,result_object.q7,result_object.q8,result_object.q9,result_object.q10]
-  
+
     boolList = []
     for i in range(0,10):
         if userAnswers[i] == None:
@@ -193,7 +173,7 @@ def scienceQuestionsReview(request):
     result_object = scienceQuizResult.objects.get(studentName=name)
     correctAnswers = [i.correctAnswer for i in questions]
     userAnswers = [result_object.q1,result_object.q2,result_object.q3,result_object.q4,result_object.q5,result_object.q6,result_object.q7,result_object.q8,result_object.q9,result_object.q10]
-  
+
     boolList = []
     for i in range(0,10):
         if userAnswers[i] == None:
@@ -212,13 +192,11 @@ def scienceQuestionsReview(request):
 class BlogListView(ListView):
     model = Blogs
     template_name = "blogList.html"
+    context_object_name = 'blogs' 
 
     def __str__(self):
         return self.blogTitle
 
-
 def blogDetailView(request,bid):
     blog = Blogs.objects.get(bid=bid)
     return render(request, "blogs.html", {'blog': blog})
-   
-    
