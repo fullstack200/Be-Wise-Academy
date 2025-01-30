@@ -11,4 +11,5 @@ urlpatterns = [
     path('resources/', ResourcesPageView.as_view(), name='resources'),
     path('evaluation/', EvaluationPageView.as_view(), name='evaluation'),
     path('signup/',SignUpView.as_view(),name='signup'),
+    path('confirmed/', SignupConfirm.as_view(), name='signupconfirm' )
 ]

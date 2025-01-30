@@ -1,10 +1,9 @@
 from django.test import TestCase
 from .models import Feedback, Enquiry, CustomUser
-from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-from .forms import EnquiryForm, FeedbackForm
+from django.contrib.auth import get_user_model
+from users.forms import CustomUserCreationForm
 
 class FeedbackModelTest(TestCase):
     def test_feedback_creation(self):
@@ -250,9 +249,6 @@ class ContactViewTests(TestCase):
         self.assertIn('cenquiryForm', response.context)
         self.assertIn('feedbackForm', response.context)
 
-    
-
-
     def test_post_without_specifying_form(self):
         # Send a POST request without specifying any form data
         response = self.client.post(reverse('contact'), data={})
@@ -351,3 +347,142 @@ class HomePageViewTests(TestCase):
         self.assertEqual(Enquiry.objects.count(), 2)
 
         
+CustomUser = get_user_model()
+
+class CustomUserModelTest(TestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(
+            username="testuser",
+            password="securepassword",
+            studentName="John Doe",
+            grade=9,
+            parentName="Jane Doe",
+            phoneNumber=9876543210,
+            schoolName="XYZ International School",
+            syllabus="IGCSE",
+            Physics=True,
+            Chemistry=False,
+            Biology=True,
+            Mathematics=True,
+            Computer_Science=False,
+            English=True,
+            Hindi=False,
+        )
+
+    def test_user_creation(self):
+        """Test if the user is created properly"""
+        self.assertEqual(self.user.username, "testuser")
+        self.assertTrue(self.user.check_password("securepassword"))
+        self.assertEqual(self.user.studentName, "John Doe")
+        self.assertEqual(self.user.grade, 9)
+        self.assertEqual(self.user.parentName, "Jane Doe")
+        self.assertEqual(self.user.phoneNumber, 9876543210)
+        self.assertEqual(self.user.schoolName, "XYZ International School")
+        self.assertEqual(self.user.syllabus, "IGCSE")
+
+    def test_default_boolean_fields(self):
+        """Test if default values of Boolean fields are False"""
+        user2 = CustomUser.objects.create_user(
+            username="user2", password="anotherpassword",  studentName="John Doe",
+            grade=9,
+            parentName="Jane Doe",
+            phoneNumber=9876543210,
+            schoolName="XYZ International School",
+            syllabus="IGCSE",
+        )
+        self.assertFalse(user2.Physics)
+        self.assertFalse(user2.Chemistry)
+        self.assertFalse(user2.Biology)
+        self.assertFalse(user2.Mathematics)
+        self.assertFalse(user2.Computer_Science)
+        self.assertFalse(user2.English)
+        self.assertFalse(user2.Hindi)
+
+    def test_syllabus_choices(self):
+        """Test if syllabus choices are valid"""
+        self.assertIn(self.user.syllabus, dict(CustomUser.SYLLABUS_CHOICES))
+
+    def test_str_method(self):
+        """Test if __str__ method returns username"""
+        self.assertEqual(str(self.user), self.user.username)
+        
+class SignUpViewTest(TestCase):
+    def test_signup_page_loads(self):
+        """Test if signup page loads properly."""
+        response = self.client.get(reverse('signup'))  # Ensure 'signup' is the correct URL name
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/signup.html')
+
+    def test_valid_signup(self):
+        """Test successful user signup."""
+        response = self.client.post(reverse('signup'), {
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 10,
+            'parentName': 'Jane Doe',
+            'phoneNumber': 1234567890,
+            'email': 'test@example.com',
+            'schoolName': 'ABC High School',
+            'syllabus': 'IGCSE',
+            'Physics': True,
+            'Chemistry': False,
+            'Biology': True,
+            'Mathematics': False,
+            'Computer_Science': True,
+            'English': True,
+            'Hindi': False,
+        })
+        self.assertEqual(response.status_code, 302)  # Redirect after successful signup
+        self.assertTrue(CustomUser.objects.filter(username='testuser').exists())
+
+    def test_invalid_signup(self):
+        """Test signup failure due to password mismatch."""
+        response = self.client.post(reverse('signup'), {
+            'username': 'testuser',
+            'password1': 'password123',
+            'password2': 'password321',  # Passwords don't match
+        })
+        self.assertEqual(response.status_code, 200)  # Form reloads due to error
+        self.assertContains(response, "The two password fields didn’t match.")  # Django's default error message
+        self.assertFalse(CustomUser.objects.filter(username='testuser').exists())  # User should not be created
+        
+class CustomUserCreationFormTest(TestCase):
+    def test_valid_form(self):
+        """Test if the form is valid with correct data."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 9,
+            'parentName': 'Jane Doe',
+            'phoneNumber': 9876543210,
+            'email': 'test@example.com',
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+            'Physics': True,
+            'Chemistry': False,
+            'Biology': True,
+            'Mathematics': False,
+            'Computer_Science': True,
+            'English': True,
+            'Hindi': False,
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form_missing_fields(self):
+        """Test if form is invalid when required fields are missing."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': '',  # Missing required field
+            'grade': '',
+            'parentName': '',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('studentName', form.errors)
+        self.assertIn('grade', form.errors)
+        self.assertIn('parentName', form.errors)
