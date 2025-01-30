@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
 from django.urls import reverse
-import boto3
 import os
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
