@@ -69,7 +69,7 @@ class EnquiryForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('studentName','grade','parentName','phoneNumber','email','schoolName','syllabus','Physics','Chemistry','Biology','Mathematics','Computer_Science','English','Hindi')
+        fields = UserCreationForm.Meta.fields + ('studentName','grade','parentName','phoneNumber','email','schoolName','syllabus','Physics','Chemistry','Biology','Mathematics','Hindi')
         
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
