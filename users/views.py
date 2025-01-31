@@ -1,13 +1,11 @@
-from re import template
-from urllib import request
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
+from django.contrib.auth.decorators import login_required
 from django.views.generic import *
-from tutor.models import Resources
 from django.http import HttpResponseRedirect
 from .forms import *
 from .models import *
+from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -74,3 +72,19 @@ class FeedbackFormConfirm(TemplateView):
 
 class SignupConfirm(TemplateView):
     template_name = 'registration/signupconfirm.html'
+    
+@login_required
+def edit_profile(request):
+    """Allow users to edit their profile."""
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('editconfirm')  # Redirect to profile page after update
+    else:
+        form = CustomUserChangeForm(instance=request.user)  # Prefill user data
+
+    return render(request, 'registration/edit_profile.html', {'form': form})
+
+class EditConfirm(TemplateView):
+    template_name = 'registration/editconfirm.html'

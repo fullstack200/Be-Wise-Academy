@@ -3,7 +3,7 @@ from .models import Feedback, Enquiry, CustomUser
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from users.forms import CustomUserCreationForm
+from users.forms import *
 
 class FeedbackModelTest(TestCase):
     def test_feedback_creation(self):
@@ -458,7 +458,7 @@ class CustomUserCreationFormTest(TestCase):
             'studentName': 'John Doe',
             'grade': 9,
             'parentName': 'Jane Doe',
-            'phoneNumber': 9876543210,
+            'phoneNumber': '9876543210',
             'email': 'test@example.com',
             'schoolName': 'XYZ International',
             'syllabus': 'ICSE',
@@ -467,7 +467,7 @@ class CustomUserCreationFormTest(TestCase):
             'Biology': True,
             'Mathematics': False,
             'Computer_Science': True,
-            'English': True,
+            'English': True, 
             'Hindi': False,
         })
         self.assertTrue(form.is_valid())
@@ -486,3 +486,107 @@ class CustomUserCreationFormTest(TestCase):
         self.assertIn('studentName', form.errors)
         self.assertIn('grade', form.errors)
         self.assertIn('parentName', form.errors)
+
+    def test_invalid_student_name(self):
+        """Test if student name contains numbers or symbols."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John123',  # Invalid name
+            'grade': 9,
+            'parentName': 'Jane Doe',
+            'phoneNumber': '9876543210',
+            'email': 'test@example.com',
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('studentName', form.errors)
+
+    def test_invalid_parent_name(self):
+        """Test if parent name contains numbers or symbols."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 9,
+            'parentName': 'Jane@Doe',  # Invalid parent name
+            'phoneNumber': '9876543210',
+            'email': 'test@example.com',
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('parentName', form.errors)
+
+    def test_invalid_grade(self):
+        """Test if grade is out of the allowed range (7-10)."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 11,  # Invalid grade
+            'parentName': 'Jane Doe',
+            'phoneNumber': '9876543210',
+            'email': 'test@example.com',
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('grade', form.errors)
+
+    def test_invalid_phone_number_length(self):
+        """Test if phone number is not exactly 10 digits."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 9,
+            'parentName': 'Jane Doe',
+            'phoneNumber': '12345',  # Too short
+            'email': 'test@example.com',
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('phoneNumber', form.errors)
+
+    def test_invalid_phone_number_characters(self):
+        """Test if phone number contains letters or symbols."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 9,
+            'parentName': 'Jane Doe',
+            'phoneNumber': '98765abcde',  # Contains letters
+            'email': 'test@example.com',
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('phoneNumber', form.errors)
+
+    def test_invalid_email_format(self):
+        """Test if email format is invalid."""
+        form = CustomUserCreationForm(data={
+            'username': 'testuser',
+            'password1': 'strongpassword123',
+            'password2': 'strongpassword123',
+            'studentName': 'John Doe',
+            'grade': 9,
+            'parentName': 'Jane Doe',
+            'phoneNumber': '9876543210',
+            'email': 'invalid-email',  # Invalid email
+            'schoolName': 'XYZ International',
+            'syllabus': 'ICSE',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors)
+
+
