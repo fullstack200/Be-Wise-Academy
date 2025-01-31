@@ -51,7 +51,11 @@
         </div>
         
         <div class="nav-bar-3">
-            <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ=="><i class="fa-brands fa-instagram" style="color:#36013F"></i></a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}">Logout</a> | <a href="{% url 'edit_profile' %}">Edit Profile</a>
+            {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            {% endif %}
         </div>
 
         <div id="mySidenav" class="sidenav">
@@ -65,19 +69,21 @@
             <a href="{% url 'blogList' %}">Blogs</a>
             <a href="{% url 'contact' %}">Contact Us</a>
 
-            <div style="display:flex; margin-top: 30px;">
-                <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ=="><i class="fa-brands fa-instagram" style="color:white"></i></a>
+            <div class="sidenav2" style="display:flex; margin-top: 30px;">
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a> 
+                <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                {% endif %}
             </div>
         </div>
-       
         <div class="side-bar">
             <!-- Use any element to open the sidenav -->
             <span id="side-menu-button" onclick="openNav()"><i class="fa-solid fa-bars"
                     style="color:white;"></i></span>
         </div>
     </div>
-
-
     {% block content %}
     {% endblock content %}
 

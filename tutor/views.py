@@ -9,15 +9,15 @@ from django.contrib.auth.decorators import login_required
 from users.forms import *
 
 # Create your views here.
-
+@login_required
 def physicsView(request):
     docs = Resources.objects.filter(subjectName="Physics")
     return render(request, "subject.html", {'list': docs})
-
+@login_required
 def chemistryView(request):
     docs = Resources.objects.filter(subjectName="Chemistry")
     return render(request, "subject.html", {'list': docs})
-
+@login_required
 def mathematicsView(request):
     docs = Resources.objects.filter(subjectName="Mathematics")
     return render(request, "subject.html", {'list': docs})

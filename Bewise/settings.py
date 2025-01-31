@@ -51,9 +51,6 @@ if ENVIRONMENT == 'production':
 else:
     SECURE_SSL_REDIRECT = False
 
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
