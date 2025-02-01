@@ -364,8 +364,6 @@ class CustomUserModelTest(TestCase):
             Chemistry=False,
             Biology=True,
             Mathematics=True,
-            Computer_Science=False,
-            English=True,
             Hindi=False,
         )
 
@@ -394,8 +392,6 @@ class CustomUserModelTest(TestCase):
         self.assertFalse(user2.Chemistry)
         self.assertFalse(user2.Biology)
         self.assertFalse(user2.Mathematics)
-        self.assertFalse(user2.Computer_Science)
-        self.assertFalse(user2.English)
         self.assertFalse(user2.Hindi)
 
     def test_syllabus_choices(self):
@@ -430,8 +426,6 @@ class SignUpViewTest(TestCase):
             'Chemistry': False,
             'Biology': True,
             'Mathematics': False,
-            'Computer_Science': True,
-            'English': True,
             'Hindi': False,
         })
         self.assertEqual(response.status_code, 302)  # Redirect after successful signup
@@ -466,8 +460,6 @@ class CustomUserCreationFormTest(TestCase):
             'Chemistry': False,
             'Biology': True,
             'Mathematics': False,
-            'Computer_Science': True,
-            'English': True, 
             'Hindi': False,
         })
         self.assertTrue(form.is_valid())
@@ -589,4 +581,181 @@ class CustomUserCreationFormTest(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('email', form.errors)
 
+class CustomUserChangeFormTest(TestCase):
+    def setUp(self):
+        """Set up a user for testing."""
+        self.user = CustomUser.objects.create_user(
+            username='testuser',
+            studentName='John Doe',
+            grade=10,
+            parentName='Jane Doe',
+            phoneNumber=1234567890,
+            schoolName='Springfield High',
+            syllabus='CBSE',
+            Physics=True,
+            Chemistry=False,
+            Biology=True,
+            Mathematics=True,
+            Hindi=False,
+            email='john.doe@example.com',
+            password='strongpassword123'
+        )
 
+    def test_valid_form(self):
+        """Test if form is valid with correct data."""
+        form = CustomUserChangeForm(data={
+            'username': 'newusername',
+            'studentName': 'Johnny Doe',
+            'grade': 10,
+            'parentName': 'Jane Doe',
+            'phoneNumber': 9876543210,
+            'schoolName': 'Greenwood High',
+            'syllabus': 'ICSE',
+            'Physics': False,
+            'Chemistry': True,
+            'Biology': False,
+            'Mathematics': True,
+            'Hindi': True,
+            'email': 'johnny.doe@example.com',
+        }, instance=self.user)
+        
+        if not form.is_valid():
+            print(form.errors)  # Debugging step
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_email(self):
+        """Test if form is invalid when an incorrect email format is provided."""
+        form = CustomUserChangeForm(data={
+            'username': 'newusername',
+            'studentName': 'Johnny Doe',
+            'grade': 11,
+            'parentName': 'Jane Doe',
+            'phoneNumber': 9876543210,
+            'schoolName': 'Greenwood High',
+            'syllabus': 'ICSE',
+            'Physics': False,
+            'Chemistry': True,
+            'Biology': False,
+            'Mathematics': True,
+            'Hindi': True,
+            'email': 'invalid-email',
+        }, instance=self.user)
+        self.assertFalse(form.is_valid())
+        self.assertIn('email', form.errors)
+
+    def test_missing_required_fields(self):
+        """Test if form is invalid when required fields are missing."""
+        form = CustomUserChangeForm(data={}, instance=self.user)
+        self.assertFalse(form.is_valid())
+        
+        required_fields = ['studentName', 'grade', 'parentName', 'phoneNumber', 'schoolName', 'syllabus']
+        for field in required_fields:
+            self.assertIn(field, form.errors, f"Expected '{field}' to be required but it's missing in form errors")
+
+    def test_password_not_editable(self):
+        """Ensure the password field is not included in the form."""
+        form = CustomUserChangeForm(instance=self.user)
+        self.assertNotIn('password', form.fields)
+        
+User = get_user_model()
+
+class EditProfileViewTest(TestCase):
+    def setUp(self):
+        """Create a test user and log them in."""
+        self.user = User.objects.create_user(
+            username='testuser', password='testpassword',
+            studentName='John Doe', grade=9, parentName='Jane Doe',
+            phoneNumber=9876543210, schoolName='XYZ International', syllabus='ICSE',
+            Physics=True, Chemistry=False, Biology=True, Mathematics=True,
+            Hindi=False
+        )
+        self.client.login(username='testuser', password='testpassword')
+
+    def test_edit_profile_view_get(self):
+        """Test GET request pre-fills the form with user data."""
+        response = self.client.get(reverse('edit_profile'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/edit_profile.html')
+        self.assertIsInstance(response.context['form'], CustomUserChangeForm)
+        self.assertEqual(response.context['form'].instance, self.user)
+
+    def test_edit_profile_view_post_valid(self):
+        """Test POST request updates the user profile."""
+        data = {
+            'username': 'testuser',
+            'studentName': 'Jane Doe',
+            'grade': 10,
+            'parentName': 'John Doe',
+            'phoneNumber': 1234567890,
+            'schoolName': 'ABC High School',
+            'syllabus': 'CBSE',
+            'Physics': False,
+            'Chemistry': True,
+            'Biology': False,
+            'Mathematics': False,
+            'Hindi': True
+        }
+        response = self.client.post(reverse('edit_profile'), data)
+
+        # Ensure user is redirected after successful update
+        self.assertRedirects(response, reverse('editconfirm'))
+
+        # Refresh user from DB and check updated values
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.studentName, 'Jane Doe')
+        self.assertEqual(self.user.grade, 10)
+        self.assertEqual(self.user.parentName, 'John Doe')
+        self.assertEqual(self.user.phoneNumber, 1234567890)
+        self.assertEqual(self.user.schoolName, 'ABC High School')
+        self.assertEqual(self.user.syllabus, 'CBSE')
+        self.assertFalse(self.user.Physics)
+        self.assertTrue(self.user.Chemistry)
+        self.assertFalse(self.user.Biology)
+        self.assertFalse(self.user.Mathematics)
+        self.assertTrue(self.user.Hindi)
+
+    def test_edit_profile_view_post_invalid(self):
+        """Test POST request with invalid data does not update profile."""
+        data = {
+            'username': 'testuser',
+            'studentName': '',  # Required field left empty
+            'grade': '',
+            'parentName': '',
+            'phoneNumber': 'invalidnumber',  # Invalid input
+            'schoolName': '',
+            'syllabus': '',
+        }
+        response = self.client.post(reverse('edit_profile'), data)
+
+        # Form should not be valid, so re-render the page
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/edit_profile.html')
+        self.assertTrue(response.context['form'].errors)
+        self.assertIn('studentName', response.context['form'].errors)
+        self.assertIn('grade', response.context['form'].errors)
+        self.assertIn('phoneNumber', response.context['form'].errors)
+
+        # Ensure no changes were saved to the database
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.studentName, 'John Doe')
+
+    def test_edit_profile_redirects_if_not_logged_in(self):
+        """Test that unauthenticated users are redirected."""
+        self.client.logout()
+        response = self.client.get(reverse('edit_profile'))
+        # Update the login redirect URL to use the custom login view
+        self.assertRedirects(response, f"{reverse('login')}?next={reverse('edit_profile')}")
+        
+class ConfirmViewsTest(TestCase):
+
+    def test_edit_confirm_view(self):
+        """Test if EditConfirm view loads successfully."""
+        response = self.client.get(reverse('editconfirm'))  # URL name from urls.py
+        self.assertEqual(response.status_code, 200)  # Page should load successfully
+        self.assertTemplateUsed(response, 'registration/editconfirm.html')  # Ensure correct template is used
+
+    def test_signup_confirm_view(self):
+        """Test if SignupConfirm view loads successfully."""
+        response = self.client.get(reverse('signupconfirm'))  # URL name from urls.py
+        self.assertEqual(response.status_code, 200)  # Page should load successfully
+        self.assertTemplateUsed(response, 'registration/signupconfirm.html')

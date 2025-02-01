@@ -126,8 +126,6 @@ class CustomUserCreationForm(UserCreationForm):
             cleaned_data.get('Chemistry'),
             cleaned_data.get('Biology'),
             cleaned_data.get('Mathematics'),
-            cleaned_data.get('Computer_Science'),
-            cleaned_data.get('English'),
             cleaned_data.get('Hindi')
         ]
         
@@ -142,7 +140,7 @@ class CustomUserChangeForm(UserChangeForm):
         fields = (
             'studentName', 'grade', 'parentName', 'phoneNumber', 'email', 
             'schoolName', 'syllabus', 'Physics', 'Chemistry', 'Biology', 
-            'Mathematics', 'Computer_Science', 'English', 'Hindi'
+            'Mathematics', 'Hindi'
         )
         
     def __init__(self, *args, **kwargs):
@@ -165,3 +163,4 @@ class CustomUserChangeForm(UserChangeForm):
             raise forms.ValidationError("Grade must be between 7 and 10.")
         return grade
         
+

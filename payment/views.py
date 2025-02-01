@@ -34,14 +34,6 @@ def paymentpage(request):
 		syllabus_obj = Syllabus.objects.get(syllabusName=request.user.syllabus)
 		fee_obj = Fee.objects.get(syllabus=syllabus_obj,subject="Biology",gradeNumber=request.user.grade)
 		tot_amt += fee_obj.fee
-	if request.user.Computer_Science == True:
-		syllabus_obj = Syllabus.objects.get(syllabusName=request.user.syllabus)
-		fee_obj = Fee.objects.get(syllabus=syllabus_obj,subject="Computer Science",gradeNumber=request.user.grade)
-		tot_amt += fee_obj.fee
-	if request.user.English == True:
-		syllabus_obj = Syllabus.objects.get(syllabusName=request.user.syllabus)
-		fee_obj = Fee.objects.get(syllabus=syllabus_obj,subject="English",gradeNumber=request.user.grade)
-		tot_amt += fee_obj.fee
 	if request.user.Hindi == True:
 		syllabus_obj = Syllabus.objects.get(syllabusName=request.user.syllabus)
 		fee_obj = Fee.objects.get(syllabus=syllabus_obj,subject="Hindi",gradeNumber=request.user.grade)

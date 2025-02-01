@@ -49,13 +49,23 @@
             <a href="{% url 'blogList' %}">Blogs</a>
             <a href="{% url 'contact' %}">Contact Us</a>
         </div>
-        
-        <div class="nav-bar-3">
-            {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">Logout</a> | <a href="{% url 'edit_profile' %}">Edit Profile</a>
-            {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            {% endif %}
+
+        {% if user.is_authenticated %}
+        <div class="nav-bar-3" style="width:20%">
+            <img class="nav-bar-3-img" src="{% static './static/content/logout.png' %}" alt=""><a
+                href="{% url 'logout' %}"> Logout </a> | <img class="nav-bar-3-img"
+                src="{% static './static/content/edit.png' %}" alt=""> <a href="{% url 'edit_profile' %}"> Edit
+                Profile</a>
+        </div>
+        {% else %}
+        <div class="nav-bar-3" style="width:8%">
+            <img class="nav-bar-3-img" src="{% static './static/content/login.png' %}" alt=""><a
+                href="{% url 'login' %}">Login</a>
+        </div>
+        {% endif %}
+
+        <div id="popup-message" class="popup">
+            <span class="popuptext" id="popup-text"></span>
         </div>
 
         <div id="mySidenav" class="sidenav">
@@ -71,7 +81,7 @@
 
             <div class="sidenav2" style="display:flex; margin-top: 30px;">
                 {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}">Logout</a> 
+                <a href="{% url 'logout' %}">Logout</a>
                 <a href="{% url 'edit_profile' %}">Edit Profile</a>
                 {% else %}
                 <a href="{% url 'login' %}">Login</a>
@@ -80,8 +90,7 @@
         </div>
         <div class="side-bar">
             <!-- Use any element to open the sidenav -->
-            <span id="side-menu-button" onclick="openNav()"><i class="fa-solid fa-bars"
-                    style="color:white;"></i></span>
+            <span id="side-menu-button" onclick="openNav()"><i class="fa-solid fa-bars" style="color:white;"></i></span>
         </div>
     </div>
     {% block content %}
@@ -110,7 +119,8 @@
                 <a href="{% url 'contact' %}">Contact Us</a>
             </div>
             <div class="footer2-3">
-                <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ==" class="footer-links"><i class="fa-brands fa-instagram"
+                <a href="https://www.instagram.com/bewiseacademy2019/profilecard/?igsh=MXViY3dzcGJhdDk2dQ=="
+                    class="footer-links"><i class="fa-brands fa-instagram"
                         style="color: white; font-size: 1.5rem;"></i></a>
             </div>
         </div>
@@ -120,34 +130,49 @@
             fullstackdeveloper404.</p>
     </div>
     <script>
-    // Function to close the popup
-    function closePopup() {
-        document.querySelector('.model3').style.display = 'none';
-        // Set a flag in localStorage to indicate that the popup has been displayed
-        localStorage.setItem('popupDisplayed', 'true');
-    }
-
-    // Function to display the popup after a delay
-    function displayPopup() {
-        console.log("Function called")
-        // Check if the popup has already been displayed
-        if (localStorage.getItem('popupDisplayed') !== 'true') {
-            // Display the popup after a delay of 10 seconds
-            setTimeout(function() {
-                document.querySelector('.model3').style.display = 'block';
-            }, 10000); // 10000 milliseconds = 10 seconds
+        // Function to close the popup
+        function closePopup() {
+            document.querySelector('.model3').style.display = 'none';
+            // Set a flag in localStorage to indicate that the popup has been displayed
+            localStorage.setItem('popupDisplayed', 'true');
         }
-    }
 
-    // Call the function to display the popup after the page has loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        displayPopup();
-    });
-    
+        // Function to display the popup after a delay
+        function displayPopup() {
+            console.log("Function called")
+            // Check if the popup has already been displayed
+            if (localStorage.getItem('popupDisplayed') !== 'true') {
+                // Display the popup after a delay of 10 seconds
+                setTimeout(function () {
+                    document.querySelector('.model3').style.display = 'block';
+                }, 10000); // 10000 milliseconds = 10 seconds
+            }
+        }
+
+        // Call the function to display the popup after the page has loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            displayPopup();
+        });
+
         const d = new Date();
         let year = d.getFullYear();
         document.getElementById("current-year").innerHTML = year;
-</script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var popup = document.getElementById("popup-message");
+            var popupText = document.getElementById("popup-text");
+
+            {% if messages %}
+            {% for message in messages %}
+            popupText.innerHTML = "{{ message }}";
+            popup.classList.add("show");
+            setTimeout(function () {
+                popup.classList.remove("show");
+            }, 5000); // Hide after 3 seconds
+            {% endfor %}
+            {% endif %}
+        });
+    </script>
 </body>
 
 </html>

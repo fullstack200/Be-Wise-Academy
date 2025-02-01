@@ -6,6 +6,9 @@ from django.http import HttpResponseRedirect
 from .forms import *
 from .models import *
 from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib import messages
+
 
 # Create your views here.
 
@@ -88,3 +91,13 @@ def edit_profile(request):
 
 class EditConfirm(TemplateView):
     template_name = 'registration/editconfirm.html'
+    
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        messages.success(self.request, "You have successfully logged in!")
+        return super().form_valid(form)
+
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(self.request, "You have successfully logged out!")
+        return super().dispatch(request, *args, **kwargs)

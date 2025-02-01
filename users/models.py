@@ -40,7 +40,5 @@ class CustomUser(AbstractUser):
     Chemistry = models.BooleanField(default=False)
     Biology = models.BooleanField(default=False)
     Mathematics = models.BooleanField(default=False)
-    Computer_Science = models.BooleanField(default=False)
-    English = models.BooleanField(default=False)
     Hindi = models.BooleanField(default=False)
 
