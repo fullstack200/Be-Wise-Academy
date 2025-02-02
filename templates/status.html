@@ -21,33 +21,71 @@
             text-align: center;
         }
 
-        @media screen and (min-width: 1024px) {
-            h1 {
-                font-size: 3rem;
-            }
-
-            h3 {
-                font-size: 1.5rem;
-            }
+        .funds-error-message-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Adjust as needed */
         }
 
-        @media screen and (max-width: 480px) {
+        .funds-cross-text-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* Space between X mark and text */
+            padding: 10px 20px;
+        }
+
+        .funds-cross-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .funds-error-text {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        @media screen and (min-width: 1024px) {
             h1 {
-                font-size: 1rem;
+                font-size: 32pt;
             }
 
-            h3 {
-                font-size: 0.7rem;
+            h2 {
+                font-size: 20pt;
+            }
+
+            p {
+                font-size: 14pt;
             }
         }
 
         @media screen and (max-width: 820px) {
             h1 {
-                font-size: 1.2rem;
+                font-size: 28pt;
             }
 
-            h3 {
-                font-size: 0.8rem;
+            h2 {
+                font-size: 18pt;
+            }
+
+            p {
+                font-size: 13pt;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 24pt;
+            }
+
+            h2 {
+                font-size: 16pt;
+            }
+
+            p {
+                font-size: 12pt;
             }
         }
     </style>
@@ -58,15 +96,71 @@
     <div class="status">
         {% block content %}
         {% if status == True %}
-        <h1>Payment Done &nbsp;<i class="fa-solid fa-circle-check" style="color: #0ac220;"></i></h1>
-        <h3>Thank you</h3>
-        {% else %}
-        <h1>Payment unsuccessful &nbsp;<i class="fa-solid fa-circle-xmark" style="color: #fe0606;"></i></h1>
-        <h3>Please contact Admin if amount is debited from your account to confirm.</h3>
-        <p>Go back to <a href="{% url 'payment' %}">Payment's</a> page.</p>
-        {% endif %}
-    </div>
-    {% endblock content %}
+        <div class="funds-success-message-container">
+            <div class="funds-checkmark-text-container">
+                <div class="funds-checkmark-container">
+                    <svg class="funds-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="funds-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                        <path class="funds-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                    </svg>
+
+                    <div class="funds-display-on-ie">
+                        <svg class="funds-ie-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="funds-ie-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="funds-ie-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                        </svg>
+                    </div>
+                </div>
+
+                <h1 class="funds-success-done-text">Payment Successful!</h1>
+            </div>
+
+            <div class="funds-success-message">
+                <h2>Your payment has been processed successfully.</h2>
+            </div>
+            {% else %}
+            <div class="funds-error-message-container">
+                <div class="funds-cross-text-wrapper">
+                    <!-- X Mark Container -->
+                    <div class="funds-cross-container">
+                        <svg class="funds-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="40"
+                            height="40">
+                            <!-- Circle Animation -->
+                            <circle class="funds-cross-circle" cx="16" cy="16" r="14" fill="none" stroke="red"
+                                stroke-width="2">
+                                <animate attributeName="r" from="0" to="14" dur="0.3s" fill="freeze" />
+                                <animate attributeName="opacity" from="0" to="1" dur="0.3s" fill="freeze" />
+                            </circle>
+
+                            <!-- First Line of X -->
+                            <path class="funds-cross-line" d="M10 10 L22 22" stroke="red" stroke-width="3"
+                                stroke-linecap="round" fill="none" stroke-dasharray="18" stroke-dashoffset="18">
+                                <animate attributeName="stroke-dashoffset" from="18" to="0" dur="0.3s" begin="0.3s"
+                                    fill="freeze" />
+                            </path>
+
+                            <!-- Second Line of X -->
+                            <path class="funds-cross-line" d="M22 10 L10 22" stroke="red" stroke-width="3"
+                                stroke-linecap="round" fill="none" stroke-dasharray="18" stroke-dashoffset="18">
+                                <animate attributeName="stroke-dashoffset" from="18" to="0" dur="0.3s" begin="0.6s"
+                                    fill="freeze" />
+                            </path>
+                        </svg>
+                    </div>
+
+                    <!-- Error Text -->
+                    <h1 class="funds-error-text">Payment Failed!</h1>
+                </div>
+            </div>
+
+
+            <div class="funds-success-message">
+                <h2>Your payment has not processed.</h2>
+                <p>Please contact the admin if money has been debitted from your account.</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endblock content %}
 </body>
 
 </html>
