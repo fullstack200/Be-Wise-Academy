@@ -9,8 +9,9 @@ class Payment(models.Model):
     syllabus = models.CharField(max_length=50)
     grade=models.CharField(max_length=50)
     amount = models.IntegerField()
-    paymentStatus = models.CharField(max_length=50, default="None")
+    paymentStatus = models.BooleanField(default=False)
     paymentDateNTime = models.CharField(max_length=100)
 
     def __str__(self):
         return str(self.student)
+    
