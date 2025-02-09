@@ -4,12 +4,14 @@ import uuid
 from datetime import date
 import datetime
 import time
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from django.urls import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
-from users.models import CustomUser
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class ResourcesModelTest(TestCase):
     def setUp(self):
@@ -199,11 +201,36 @@ class BlogsModelTest(TestCase):
         # Check if the file delete method was called
         mock_delete.assert_called_once_with(False)
         
-class TutorAppViewsTest(TestCase):
+from django.test import TestCase, Client
+from django.urls import reverse
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth import get_user_model
+from tutor.models import Syllabus, Resources, Fee
 
+User = get_user_model()
+
+class TutorAppViewsTest(TestCase):
     def setUp(self):
-        """Set up test data"""
+        """Set up test data including user login"""
         self.client = Client()
+        
+        # Create a test user
+        self.user = User.objects.create_user(
+            username='teststudent',
+            password='testpassword',
+            studentName='John Doe',
+            grade=10,
+            parentName='Jane Doe',
+            phoneNumber=1234567890,
+            schoolName='Test School',
+            syllabus='CBSE',
+            Physics=True, Chemistry=False, Biology=True, Mathematics=True, Hindi=False
+        )
+        
+        # Log in the user before tests
+        self.client.login(username='teststudent', password='testpassword')
+
+        # Create syllabus data
         self.syllabus1 = Syllabus.objects.create(syllabusName="IGCSE")
         self.syllabus2 = Syllabus.objects.create(syllabusName="CBSE")
 
