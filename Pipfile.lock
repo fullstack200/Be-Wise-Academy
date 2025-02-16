@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1b6e754bc2307b35e80e5464e3357aaf79a9fdf5c274be594167f99d5c229b35"
+            "sha256": "58f7d7897d09e02dc1900425629fdbb8f799da2f4b492e549ee5b02d365c1889"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -295,6 +295,20 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==10.2.0"
+        },
+        "pymupdf": {
+            "hashes": [
+                "sha256:46d90c4f9e62d1856e8db4b9f04a202ff4a7f086a816af73abdc86adb7f5e25a",
+                "sha256:4fb357438c9129fbf939b5af85323434df64e36759c399c376b62ad6da95498c",
+                "sha256:6ef753005b72ebfd23470f72f7e30f61e21b0b5e748045ec5b8f89e6e3068d62",
+                "sha256:96878e1b748f9c2011aecb2028c5f96b5a347a9a91169130ad0133053d97915e",
+                "sha256:a5de51efdbe4d486b6c1111c84e8a231cbfb426f3d6ff31ab530ad70e6f39756",
+                "sha256:b640187c64c5ac5d97505a92e836da299da79c2f689f3f94a67a37a493492193",
+                "sha256:bca72e6089f985d800596e22973f79cc08af6cbff1d93e5bda9248326a03857c"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.9'",
+            "version": "==1.25.3"
         },
         "python-dateutil": {
             "hashes": [

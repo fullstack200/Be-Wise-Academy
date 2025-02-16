@@ -5,6 +5,8 @@ from tutor.models import Fee, Syllabus
 from payment.models import Payment
 from unittest.mock import patch
 from django.utils.timezone import now
+import datetime
+import uuid
 
 User = get_user_model()
 
@@ -28,7 +30,7 @@ class PaymentHandlerTest(TestCase):
         Fee.objects.create(syllabus=self.syllabus, subject='Biology', gradeNumber=10, fee=4000)
         
         self.client.login(username='teststudent', password='testpassword')
-    
+
     def set_session(self):
         """ Manually set session variables. """
         session = self.client.session
@@ -55,7 +57,7 @@ class PaymentHandlerTest(TestCase):
     def test_paymenthandler_success(self, mock_verify_signature):
         self.set_session()
         mock_verify_signature.return_value = True
-        
+
         response = self.client.post(reverse('paymenthandler'), {
             'razorpay_payment_id': 'pay_test_123',
             'razorpay_order_id': 'order_test_123',
@@ -66,7 +68,9 @@ class PaymentHandlerTest(TestCase):
         self.assertTemplateUsed(response, 'status.html')
         payment = Payment.objects.get(student=self.user)
         self.assertTrue(payment.paymentStatus)
-    
+        self.assertTrue(payment.invoice_number.startswith("invoice"))
+        self.assertEqual(len(payment.invoice_number.split("-")), 2)  # Ensuring format is correct
+
     @patch('payment.views.razorpay_client.utility.verify_payment_signature')
     def test_paymenthandler_signature_failure(self, mock_verify_signature):
         self.set_session()
@@ -115,8 +119,15 @@ class PaymentModelTest(TestCase):
             grade=str(self.user.grade),
             amount=9000,
             paymentStatus=True,
-            paymentDateNTime=str(now())  # Use Django's timezone-aware function
+            paymentDateNTime=str(now()),  # Use Django's timezone-aware function
+            invoice_number=self.generate_invoice_number()
         )
+
+    def generate_invoice_number(self):
+        """Generate invoice number format: invoiceDDMM-XXXXXX"""
+        today = datetime.date.today().strftime('%d%m')
+        unique_suffix = uuid.uuid4().hex[:6]  # Generate a short unique ID
+        return f"invoice{today}-{unique_suffix}"
 
     def test_payment_creation(self):
         """Test that a Payment instance is created correctly"""
@@ -127,7 +138,11 @@ class PaymentModelTest(TestCase):
         self.assertEqual(payment.amount, 9000)
         self.assertEqual(payment.paymentStatus, True)
         self.assertTrue(payment.paymentDateNTime)  # Ensures it's not empty
+        self.assertTrue(payment.invoice_number.startswith("invoice"))  # Check invoice format
+        self.assertEqual(len(payment.invoice_number.split("-")), 2)  # Ensuring format
 
     def test_payment_str_representation(self):
         """Test the __str__ method of Payment model"""
-        self.assertEqual(str(self.payment), str(self.user))
+        expected_str = f"{self.user.username} - {self.payment.invoice_number}"
+        self.assertEqual(str(self.payment), expected_str)
+    

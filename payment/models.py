@@ -1,8 +1,8 @@
 from django.db import models
 from users.models import CustomUser
 import datetime
+import uuid
 # Create your models here.
-
 
 class Payment(models.Model):
     student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -11,7 +11,17 @@ class Payment(models.Model):
     amount = models.IntegerField()
     paymentStatus = models.BooleanField(default=False)
     paymentDateNTime = models.CharField(max_length=100)
+    invoice_number = models.CharField(max_length=20, unique=True, blank=True, default="")
+
+    def save(self, *args, **kwargs):
+        """Generate a unique invoice number before saving"""
+        if not self.invoice_number:
+            today = datetime.date.today().strftime('%d%m')
+            unique_suffix = uuid.uuid4().hex[:6]  # Generate a short unique ID
+            self.invoice_number = f"invoice{today}-{unique_suffix}"
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return str(self.student)
+        return f"{self.student} - {self.invoice_number}"
     
