@@ -80,63 +80,81 @@ def generate_invoice_pdf(payment):
         region_name=settings.AWS_S3_REGION_NAME
     )
 
+    # 🔹 Step 2: Download PDF Template from S3
     template_s3_key = "static/invoice_template.pdf"  # S3 Path
-    file_stream = io.BytesIO()  # In-memory file
+    file_stream = io.BytesIO()
     s3.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, template_s3_key, file_stream)
-    file_stream.seek(0)  # Reset pointer
+    file_stream.seek(0)
 
-    # 🔹 Step 2: Load PDF Template
+    # 🔹 Step 3: Download Montserrat Font from S3
+    font_s3_key = "static/fonts/Montserrat-Regular.ttf"  # S3 Font Path
+    font_stream = io.BytesIO()
+    s3.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, font_s3_key, font_stream)
+    font_stream.seek(0)
+
+    # 🔹 Step 4: Load PDF Template
     doc = fitz.open(stream=file_stream, filetype="pdf")
     page = doc[0]
 
-    # 🔹 Step 3: Define Static Text Positions
+    # 🔹 Step 5: Register the Montserrat Font in PyMuPDF
+    font_bytes = font_stream.read()  # Read font into memory
+    font_name = "montserrat"  # Custom font name
+    page.insert_font(fontname=font_name, fontbuffer=font_bytes)  # Register the font
+
     text_positions = {
-        "date": (167, 662),  # <CUURENT DATE>
-        "invoice_number": (161, 624),  # <INVOICE NUMBER>
-        "student_name": (382, 662), # Paid By
-        "syllabus": (150, 130),  # Syllabus
-        "grade": (150, 160),  # Grade
-        "total_amount": (400, 450),  # Grand Total
+    "date": (167.40, 188.64),
+    "invoice_number": (161.43, 226.54),
+    "student_name": (382.24, 188.64),
+    "total_amount": (465.03, 600.97),  # Moved up by 0.1 cm and aligned with price_x
     }
 
-    # 🔹 Step 4: Insert Static Text
-    page.insert_text(text_positions["date"], payment.paymentDateNTime, fontsize=12, color=(0, 0, 0))
-    page.insert_text(text_positions["invoice_number"], payment.invoice_number, fontsize=12, color=(0, 0, 0))
-    page.insert_text(text_positions["student_name"], payment.student.studentName, fontsize=12, color=(0, 0, 0))
-    page.insert_text(text_positions["syllabus"], payment.syllabus, fontsize=12, color=(0, 0, 0))
-    page.insert_text(text_positions["grade"], str(payment.grade), fontsize=12, color=(0, 0, 0))
-    page.insert_text(text_positions["total_amount"], f"₹ {payment.amount}", fontsize=12, color=(0, 0, 0))
-
-    # 🔹 Step 5: Insert Subjects & Prices Dynamically
-    subject_y_position = 250  # Start position for subjects
-    price_x_position = 400  # Align price values
+    # 🔹 Step 7: Insert Static Text with Montserrat Font
+    current_date = datetime.now().strftime("%d-%m-%Y")  
+    page.insert_text(text_positions["date"], current_date, fontsize=12, fontname=font_name, color=(0, 0, 0))
+    page.insert_text(text_positions["invoice_number"], payment.invoice_number, fontsize=12, fontname=font_name, color=(0, 0, 0))
+    page.insert_text(text_positions["student_name"], payment.student.studentName, fontsize=12, fontname=font_name, color=(0, 0, 0))
+    page.insert_text(text_positions["total_amount"], f"₹ {str(payment.amount)}", fontsize=12, fontname=font_name, color=(0, 0, 0))
+    
+    # 🔹 Step 8: Extract Subjects & Prices Dynamically
+    subject_x = 118.48  # X position for subjects (from SUBJECT 1)
+    price_x = 467.03  # X position for prices (from PRICE)
+    start_y = 374.39  # Y position for first subject (from SUBJECT 1)
+    row_spacing = 28.35  # 1 cm gap between rows
 
     subjects = []
-    if payment.student.Physics:
-        subjects.append(("Physics", 5000))
-    if payment.student.Chemistry:
-        subjects.append(("Chemistry", 4000))
-    if payment.student.Biology:
-        subjects.append(("Biology", 4500))
-    if payment.student.Hindi:
-        subjects.append(("Hindi", 3000))
 
-    for subject, price in subjects:
-        page.insert_text((150, subject_y_position), subject, fontsize=12, color=(0, 0, 0))
-        page.insert_text((price_x_position, subject_y_position), f"₹ {price}", fontsize=12, color=(0, 0, 0))
-        subject_y_position += 20  # Move down for next subject
+    subject_mapping = {
+        "Physics": payment.student.Physics,
+        "Chemistry": payment.student.Chemistry,
+        "Biology": payment.student.Biology,
+        "Hindi": payment.student.Hindi,
+    }
 
-    # 🔹 Step 6: Save the Updated PDF in Memory
+    for subject_name, is_selected in subject_mapping.items():
+        if is_selected:
+            syllabus_obj = Syllabus.objects.get(syllabusName=payment.student.syllabus)
+            fee_obj = Fee.objects.get(syllabus=syllabus_obj, subject=subject_name, gradeNumber=payment.student.grade)
+            subjects.append((subject_name, fee_obj.fee))
+
+    # 🔹 Step 9: Insert Subjects & Prices
+    for index, (subject, price) in enumerate(subjects):
+        y_position = start_y + (index * row_spacing)  # Shift down for each subject
+
+        # Insert Subject & Price in the same row
+        page.insert_text((subject_x, y_position), subject, fontsize=12, fontname=font_name, color=(0, 0, 0))
+        page.insert_text((price_x, y_position), f"₹ {price}", fontsize=12, fontname=font_name, color=(0, 0, 0))
+
+    # 🔹 Step 10: Save the Updated PDF in Memory
     output_stream = io.BytesIO()
     doc.save(output_stream)
     doc.close()
     output_stream.seek(0)
 
-    # 🔹 Step 7: Upload the Invoice to S3
+    # 🔹 Step 11: Upload the Invoice to S3
     invoice_s3_key = f"invoices/{payment.invoice_number}.pdf"
     s3.upload_fileobj(output_stream, settings.AWS_STORAGE_BUCKET_NAME, invoice_s3_key, ExtraArgs={'ContentType': 'application/pdf'})
 
-    # 🔹 Step 8: Return Invoice URL
+    # 🔹 Step 12: Return Invoice URL
     invoice_url = f"https://{settings.AWS_S3_CUSTOM_DOMAIN}/{invoice_s3_key}"
     return invoice_url
 
