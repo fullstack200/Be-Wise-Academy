@@ -5,7 +5,7 @@
 
 <head>
     {% block extrahead %}
-    <!-- CSS File link -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="{% static './static/css/payment.css' %}">
     {% endblock %}
 </head>
@@ -14,53 +14,66 @@
     {% block content %}
     <div class="main-body">
         <div class="header">
-            <h1>Payment</h1>
+            <h1>Payment & Invoices</h1>
         </div>
-        <form class="model-content" action="" method="post">
-            {% csrf_token %}
-            <label for="name">Student Name</label>
-            <input type="text" name="student" value="{{user.studentName}}">
-            <label for="syllabus">Syllabus Enrolled</label>
-            <input type="text" name="syllabus" value="{{user.syllabus}}">
-            <label for="grade">Grade</label>
-            <input type="text" name="grade" value="{{user.grade}}">
-            <label for="amount">Amout to pay</label>
-            <input type="number" name="famount" value="{{amount}}">
-        
-            <div class="submit-button">
-                <button id="pay-btn" class="button-b" style="vertical-align:middle"><span>Pay
-                    </span></button>
+
+        <div class="container">
+            <!-- Payment Section -->
+            <div class="section payment-section">
+                <h2>Make Payment</h2>
+                <form class="model-content" action="" method="post">
+                    {% csrf_token %}
+                    <label for="name">Student Name</label>
+                    <input type="text" name="student" value="{{ user.studentName }}" readonly>
+
+                    <label for="syllabus">Syllabus Enrolled</label>
+                    <input type="text" name="syllabus" value="{{ user.syllabus }}" readonly>
+
+                    <label for="grade">Grade</label>
+                    <input type="text" name="grade" value="{{ user.grade }}" readonly>
+
+                    <label for="amount">Amount to Pay</label>
+                    <input type="number" name="famount" value="{{ amount }}" readonly>
+
+                    <div class="submit-button">
+                        <button id="pay-btn" class="button-b"><span>Pay</span></button>
+                    </div>
+                </form>
             </div>
-        </form>
+
+            <!-- Invoice List Section -->
+            <div class="section invoice-section">
+                <h2>Previous Payments</h2>
+                <ul class="invoice-list">
+                    {% for year, months in invoices_by_year.items %}
+                        {% for month, invoices in months.items %}
+                            {% for invoice in invoices %}
+                            <li class="invoice-item">
+                                <span>{{ invoice.day }} {{ invoice.month }}, {{ invoice.year }}</span>
+                                <a href="{{ invoice.url }}">Download &nbsp;<i class="fa-solid fa-file-arrow-down"></i></a>
+                            </li>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
-    <!-- Razorpay's Javascript code. -->
+
+    <!-- Razorpay's JavaScript Code -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         var options = {
-
-            // Enter the Key ID generated from the Dashboard
             key: "{{ razorpay_merchant_key }}",
-
-            // Amount is in currency subunits.
-            // Default currency is INR. Hence, 
-            // 50000 refers to 50000 paise
             amount: "{{ razorpay_amount }}",
             currency: "{{ currency }}",
-
-            // Your/store name.
             name: "Bewise Academy",
-
-            // Pass the `id` obtained in the response of Step 1
             order_id: "{{ razorpay_order_id }}",
             callback_url: "{{ callback_url }}",
         };
 
-        // initialise razorpay with the options.
         var rzp1 = new Razorpay(options);
-
-        // add event listener to the payment button.
         document.getElementById("pay-btn").onclick = function (e) {
-            
             rzp1.open();
             e.preventDefault();
         };

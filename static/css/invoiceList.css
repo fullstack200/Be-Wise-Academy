@@ -1,0 +1,84 @@
+.invoice-list {
+    list-style: none;
+    padding: 0;
+    width: 90%;
+    /* Wider on small screens */
+    max-width: 500px;
+    /* Prevents it from being too wide on large screens */
+    margin: 0 auto;
+    /* Centers the list */
+}
+
+.invoice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f3eefc;
+    padding: 20px 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background 0.3s ease;
+    width: 100%;
+    margin:30px 0;
+}
+
+.invoice-item:hover {
+    background: #e2d9f5;
+}
+
+.invoice-item span {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #36013F;
+}
+
+.invoice-item a {
+    text-decoration: none;
+    color: #fff;
+    background: #5a189a;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+}
+
+/* Hover Effect */
+.invoice-item a:hover {
+    background: #3c096c;
+}
+
+@media screen and (max-width: 480px) {
+    .invoice-item {
+        width: 90%;
+        /* Slightly wider on tablets */
+    }
+}
+/* 📱 Responsive Design */
+@media screen and (min-width: 768px) {
+    .invoice-list {
+        width: 60%;
+        /* Slightly wider on tablets */
+    }
+
+    .invoice-item span {
+        font-size: 1.1rem;
+    }
+
+    .invoice-item a {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .invoice-list {
+        width: 50%;
+    }
+
+    .invoice-item span {
+        font-size: 1.2rem;
+    }
+
+    .invoice-item a {
+        font-size: 1.1rem;
+    }
+}
