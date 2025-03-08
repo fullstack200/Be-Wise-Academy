@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static './static/css/contact.css' %}">
 
     <!-- JS File link -->
-    <script src="{% static './static/js/reveal.js' %}"></script>
+    <script src="{% static 'js/reveal.js' %}"></script>
 
     {% endblock %}
 </head>
@@ -23,49 +23,60 @@
 
         <div class="main-div">
             <div class="sub-div">
-                <h2 id="statement"><i class="fa-solid fa-circle-info" style="color: #36013f;"></i>&nbsp;&nbsp;Wish to enquire about admissions, curriculum, or anything else? &nbsp;You can walk in
-                    during office
-                    hours, or, give us a call.</h2>
+                <h2 id="statement">
+                    <i class="fa-solid fa-circle-info" style="color: #36013f;"></i>&nbsp;&nbsp;
+                    Wish to enquire about admissions, curriculum, or anything else?
+                    You can walk in during office hours, or give us a call.
+                </h2>
             </div>
+
             <div class="main-div-2 reveal">
                 <div class="sub-div-2" id="address-div">
-                    <h1 id=""><i class="fa-solid fa-location-dot"></i> &nbsp;Address</h1>
-                    <p id="address">1643/22/A/B, Teachers Colony, HBR Layout 2nd Block, Stage 1, HBR Layout, Bangalore,
-                        Karnataka 560043
+                    <h1><i class="fa-solid fa-location-dot"></i> &nbsp;Address</h1>
+                    <p id="address">
+                        1643/22/A/B, Teachers Colony, HBR Layout 2nd Block, Stage 1,
+                        HBR Layout, Bangalore, Karnataka 560043
                     </p>
                 </div>
                 <div class="sub-div-2">
                     <h1><i class="fa-solid fa-phone"></i> &nbsp;Phone</h1>
                     <p>+91-9538097541<br>+91-9035074997</p>
                 </div>
-
                 <div class="sub-div-2">
                     <h1><i class="fa-solid fa-envelope"></i> &nbsp;Email</h1>
                     <p>info@bewiseacademy.com</p>
                 </div>
             </div>
-            <h2 id="statement2" style="text-align:center; margin-bottom: 50px;" class="reveal">or simply submit the form
-                here.</h2>
+
+            <h2 id="statement2" style="text-align:center; margin-bottom: 50px;" class="reveal">
+                or simply submit the form here.
+            </h2>
 
             <div class="sub-div reveal">
                 <div class="container">
                     <h1>Enquiry Form</h1>
                     <form action="" method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="form_type" value="enquiry"> <!-- Hidden input -->
                         {{ cenquiryForm }}
                         <div class="submit-button">
-                            <button type="submit" class="button-b" style="vertical-align:middle"><span>Submit </span></button>
+                            <button type="submit" class="button-b" style="vertical-align:middle">
+                                <span>Submit</span>
+                            </button>
                         </div>
-
                     </form>
                 </div>
+
                 <div class="container">
                     <h1>Feedback Form</h1>
                     <form action="" method="post">
                         {% csrf_token %}
+                        <input type="hidden" name="form_type" value="feedback"> <!-- Hidden input -->
                         {{ feedbackForm }}
-                        <div class="submit-button">
-                            <button type="submit" class="button-b" style="vertical-align:middle"><span>Submit </span></button>
+                        <div class="submit-button" style="margin-top: 10px;">
+                            <button type="submit" class="button-b" style="vertical-align:middle">
+                                <span>Submit</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -73,9 +84,10 @@
         </div>
     </div>
 
-    </div>
-    {% endblock content %}
+    <!-- Google reCAPTCHA API -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+    {% endblock content %}
 </body>
 
 </html>

@@ -18,8 +18,11 @@ def homePageView(request):
     if request.method == "POST":
         eform = EnquiryForm(request.POST)
         if eform.is_valid():
-            eform.save()
-            return HttpResponseRedirect(reverse("home"))
+            if 'g-recaptcha-response' not in request.POST or not request.POST['g-recaptcha-response'].strip():
+                eform.add_error(None, "Please complete the CAPTCHA")
+            else:
+                eform.save()
+                return HttpResponseRedirect(reverse("econfirm"))
     reviews = Feedback.objects.all()
     first_review = reviews[0] if reviews else None
     rest_reviews = reviews[1:] if len(reviews) > 1 else []
@@ -33,26 +36,26 @@ def contactView(request):
     fform = FeedbackForm()
     
     if request.method == "POST":
-        # Check for 'enquiry' form submission
         if 'enquiry' in request.POST:
             eform = EnquiryForm(request.POST)
             if eform.is_valid():
-                eform.save()
-                return HttpResponseRedirect(reverse('econfirm'))
-            else:
-                return render(request, "contact.html", {"cenquiryForm": eform, "feedbackForm": fform})
+                if 'g-recaptcha-response' not in request.POST or not request.POST['g-recaptcha-response'].strip():
+                    eform.add_error(None, "Please complete the CAPTCHA")
+                else:
+                    eform.save()
+                    return HttpResponseRedirect(reverse('econfirm'))
 
-        # Check for 'feedback' form submission
         elif 'feedback' in request.POST:
             fform = FeedbackForm(request.POST)
             if fform.is_valid():
-                fform.save()
-                return HttpResponseRedirect(reverse('fconfirm'))
-            else:
-                return render(request, "contact.html", {"cenquiryForm": eform, "feedbackForm": fform})
+                if 'g-recaptcha-response' not in request.POST or not request.POST['g-recaptcha-response'].strip():
+                    fform.add_error(None, "Please complete the CAPTCHA")
+                else:
+                    fform.save()
+                    return HttpResponseRedirect(reverse('fconfirm'))
 
     return render(request, "contact.html", {"cenquiryForm": eform, "feedbackForm": fform})
-    
+
 class ServicesPageView(TemplateView):
     template_name = 'services.html'
 

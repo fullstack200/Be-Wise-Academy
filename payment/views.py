@@ -16,7 +16,6 @@ import io
 import uuid
 import boto3
 
-
 logger = logging.getLogger(__name__)
 
 # authorize razorpay client with API Keys.
@@ -41,15 +40,20 @@ def payment_invoice_page(request):
     request.session['studentN'] = user.studentName
     request.session['amountN'] = amount
 
-    # Create a Razorpay Order
-    razorpay_order = razorpay_client.order.create(dict(
-        amount=amount,
-        currency=currency,
-        payment_capture='0'
-    ))
-
+    razorpay_order = None
+    try:
+        razorpay_order = razorpay_client.order.create({
+            'amount': amount,
+            'currency': currency,
+            'payment_capture': '0'
+        })
+        razorpay_order_id = razorpay_order['id']
+    except Exception as e:
+        logger.error(f"Razorpay error: {e}")
+        razorpay_order_id = None 
+        
     # Order ID of the newly created order
-    razorpay_order_id = razorpay_order['id']
+    razorpay_order_id = razorpay_order['id'] if razorpay_order else None
     callback_url = 'paymenthandler/'
 
     # Fetch invoices
@@ -114,21 +118,34 @@ def generate_invoice_pdf(payment):
     file_stream = io.BytesIO()
     s3.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, template_s3_key, file_stream)
     file_stream.seek(0)
+    
+    file_stream.seek(0)
+    if not file_stream.getvalue().strip():
+        raise ValueError("Downloaded PDF file is empty or corrupted.")
+
+    # Ensure valid PDF format
+    if not file_stream.getvalue().startswith(b'%PDF'):
+        raise ValueError("Downloaded PDF data is invalid or corrupted.")
 
     # 🔹 Step 3: Download Montserrat Font from S3
-    font_s3_key = "static/fonts/Montserrat-Regular.ttf"  # S3 Font Path
+    font_s3_key = "static/fonts/Montserrat-Regular.ttf"
     font_stream = io.BytesIO()
     s3.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, font_s3_key, font_stream)
+
+    # ✅ Check if the downloaded file is valid
     font_stream.seek(0)
+    if not font_stream.getvalue().strip():
+        raise ValueError("Downloaded font file is empty or corrupted.")
 
     # 🔹 Step 4: Load PDF Template
     doc = fitz.open(stream=file_stream, filetype="pdf")
     page = doc[0]
 
     # 🔹 Step 5: Register the Montserrat Font in PyMuPDF
-    font_bytes = font_stream.read()  # Read font into memory
-    font_name = "montserrat"  # Custom font name
-    page.insert_font(fontname=font_name, fontbuffer=font_bytes)  # Register the font
+    font_stream.seek(0)  # ✅ Ensure the pointer is at the start before reading
+    font_bytes = font_stream.read()
+    font_name="montserrat"
+    page.insert_font(fontname=font_name, fontbuffer=font_bytes)
 
     text_positions = {
     "date": (167.40, 188.64),
@@ -181,7 +198,7 @@ def generate_invoice_pdf(payment):
 
     # 🔹 Step 11: Upload the Invoice to S3
     current_year = datetime.now().year  # Get the current year
-    invoice_filename = f"invoice{current_year}{datetime.now().strftime('%d%m')}-{uuid.uuid4().hex[:8]}.pdf"
+    invoice_filename = f"invoice{current_year}{datetime.now().strftime('%d%m')}-{payment.invoice_number}.pdf"
     invoice_s3_key = f"invoices/{invoice_filename}"
 
     s3.upload_fileobj(output_stream, settings.AWS_STORAGE_BUCKET_NAME, invoice_s3_key, ExtraArgs={'ContentType': 'application/pdf'})

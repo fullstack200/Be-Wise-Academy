@@ -144,7 +144,9 @@ class ContactViewTests(TestCase):
             'phoneNumber': 1234567890,
             'subject': 'Inquiry about courses',
             'message': 'I would like to know more about the courses offered.',
-            'enquiry': True  # Include the hidden field value
+            'enquiry': True,  # Include the hidden field value
+            'g-recaptcha-response': 'valid-recaptcha-response'
+            
         }
         response = self.client.post(reverse('contact'), data=valid_enquiry_data)
     
@@ -160,7 +162,8 @@ class ContactViewTests(TestCase):
             'studentGrade': 9,
             'noOfStars': 4,
             'review': 'Great experience!',
-            'feedback': True  # Include the hidden field value
+            'feedback': True,  
+            'g-recaptcha-response': 'valid-recaptcha-response'
         }
         response = self.client.post(reverse('contact'), data=valid_feedback_data)
     
@@ -231,6 +234,7 @@ class ContactViewTests(TestCase):
             'noOfStars': 6,  # Invalid rating (greater than 5)
             'review': 'Test review content',
             'feedback': 'True',  # The hidden input, which is required
+            'g-recaptcha-response': 'valid-recaptcha-response'
         }
     
         # Send POST request with invalid data
@@ -285,7 +289,8 @@ class HomePageViewTests(TestCase):
             'phoneNumber': '1234567890',
             'subject': 'Math',
             'message': 'This is a test message',
-            'enquiry': True  # Assuming 'enquiry' field is hidden and set to True
+            'enquiry': True,
+            'g-recaptcha-response': 'valid-recaptcha-response'
         }
 
         # Send a POST request to the homepage with the valid enquiry data
@@ -295,19 +300,18 @@ class HomePageViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
         # Check that the form data was saved by checking the response redirect URL
-        self.assertRedirects(response, reverse('home'))
+        self.assertRedirects(response, reverse('econfirm'))
 
         # Check that the enquiry form was actually saved in the database (optional)
         self.assertEqual(Enquiry.objects.count(), 1)
 
     def test_homepage_view_post_invalid_enquiry_form(self):
-        # Define invalid form data (missing student name)
         invalid_enquiry_data = {
             'studentName': '',
             'phoneNumber': '1234567890',
             'subject': 'Math',
             'message': 'This is a test message',
-            'enquiry': True
+            'enquiry': True,        
         }
 
         # Send a POST request with the invalid enquiry data
@@ -318,7 +322,7 @@ class HomePageViewTests(TestCase):
 
         # Check that the form has errors
         self.assertFormError(response, 'enquiryForm', 'studentName', 'This field is required.')
-
+        
     def test_homepage_view_no_enquiries_in_db(self):
         # Send a GET request to the homepage when there are no enquiries
         response = self.client.get(reverse('home'))

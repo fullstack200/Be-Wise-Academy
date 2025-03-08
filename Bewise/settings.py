@@ -63,7 +63,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'tutor.apps.TutorConfig',
     'payment.apps.PaymentConfig',
-    'storages'
+    'storages',
+    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -172,6 +173,9 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'concise.tutors@gmail.com'
 EMAIL_TEMPLATE_NAME = 'registration/password_reset_form.html'
 
+RECAPTCHA_PUBLIC_KEY = os.environ.get('CAPTCHA_SITE_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('CAPTCHA_SECRET_KEY')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -202,3 +206,5 @@ if ENVIRONMENT == 'development':
     SESSION_COOKIE_SECURE = False  # Allow session over HTTP
 else:
     SESSION_COOKIE_SECURE = True  # Secure only in production
+
+SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
