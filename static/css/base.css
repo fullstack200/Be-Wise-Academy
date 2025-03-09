@@ -69,7 +69,7 @@ body {
     background: rgb(107, 3, 125);
     background: linear-gradient(90deg, rgba(107, 3, 125, 1) 0%, rgba(54, 1, 63, 1) 100%);
     padding: 10px 20px;
-
+    text-align: center;
 }
 
 .header__center::before,
@@ -181,6 +181,10 @@ select {
 
 label {
     color: white;
+}
+
+label[for="id_captcha"] {
+    margin-bottom: 10px;
 }
 
 button:hover {
@@ -353,6 +357,7 @@ textarea {
     justify-content: center;
     border-top: 2px solid white;
     padding: 0 20px;
+    margin-top: 10px;
 }
 
 .submit-button a,
@@ -941,7 +946,7 @@ hr {
 
     .sidenav2 {
         display: flex;
-        align-items: center;
+        flex-direction: column;
     }
 
     .sidenav2 img{
@@ -999,7 +1004,7 @@ hr {
 
     .close1,
     .close2 {
-        font-size: 1.2rem;
+        font-size: 36px;
     }
 
     .footer {
