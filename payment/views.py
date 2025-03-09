@@ -67,8 +67,8 @@ def payment_invoice_page(request):
             try:
                 filename = invoice_url.split('/')[-1]  # Extract filename
                 date_part = filename.replace('invoice', '')[:8]  # Extract YYYYDDMM
-
-                year, day, month_number = int(date_part[:4]), int(date_part[4:6]), int(date_part[6:])
+                print(invoice_url)
+                year,month_number,day = int(date_part[:4]), int(date_part[4:6]), int(date_part[6:])
                 month_name = calendar.month_name[month_number]
                 month_year_key = f"{month_name} {year}"
 
@@ -198,7 +198,8 @@ def generate_invoice_pdf(payment):
 
     # 🔹 Step 11: Upload the Invoice to S3
     current_year = datetime.now().year  # Get the current year
-    invoice_filename = f"invoice{current_year}{datetime.now().strftime('%d%m')}-{payment.invoice_number}.pdf"
+    unique_string = payment.invoice_number[16:]
+    invoice_filename = f"invoice{current_year}{datetime.now().strftime('%m%d')}-{unique_string}.pdf"
     invoice_s3_key = f"invoices/{invoice_filename}"
 
     s3.upload_fileobj(output_stream, settings.AWS_STORAGE_BUCKET_NAME, invoice_s3_key, ExtraArgs={'ContentType': 'application/pdf'})

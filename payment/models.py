@@ -29,22 +29,24 @@ class Payment(models.Model):
     def __str__(self):
         return f"{self.student} - {self.invoice_number}"
 
+import logging
+
+logger = logging.getLogger(__name__)  # Add this at the top of your file
+
 @receiver(post_delete, sender=Payment)
 def remove_invoice_pdf(sender, instance, **kwargs):
     """Delete the associated invoice PDF from S3 when the Payment object is deleted."""
     if instance.invoice_url:
         try:
-            # Extract the relative file path from the URL (strip the base URL part)
             if instance.invoice_url.startswith('https://nbewise.s3.amazonaws.com/'):
                 file_path = instance.invoice_url.replace('https://nbewise.s3.amazonaws.com/', '')
+
+            logger.info(f"Attempting to delete file: {file_path}")
             
-            print(f"Attempting to delete file: {file_path}")
-            
-            # Check if the file exists before attempting to delete
             if default_storage.exists(file_path):
                 default_storage.delete(file_path)
-                print(f"File {file_path} deleted successfully.")
+                logger.info(f"File {file_path} deleted successfully.")
             else:
-                print(f"File {file_path} not found on S3.")
+                logger.warning(f"File {file_path} not found on S3.")
         except Exception as e:
-            print(f"Error deleting invoice file from S3: {e}")
+            logger.error(f"Error deleting invoice file from S3: {e}")

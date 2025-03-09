@@ -29,6 +29,7 @@ mailersend = "==0.5.6"
 pytz = "==2024.1"
 django-recaptcha = "*"
 django-simple-captcha = "*"
+reportlab = "*"
 
 [dev-packages]
 
