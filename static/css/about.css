@@ -7,7 +7,7 @@
 }
 
 .main-body p {
-    text-align: left;
+    text-align: center;
     line-height: 1.7;
 }
 
@@ -156,10 +156,10 @@
 
 @media screen and (max-width: 480px) {
 
-    .description {
+    .main-body p, .founder p{
         font-size: 0.9rem;
     }
-
+    
     .points li {
         margin: 0 5px;
         font-size: 0.9rem;
@@ -187,9 +187,6 @@
     }
 
     .founder p {
-        font-size: 0.9rem;
         margin: 20px 20px 0;
     }
-
-
 }

@@ -105,6 +105,7 @@ body {
     line-height: 1;
     margin-left: 10px;
     margin-bottom: 0;
+    margin-top: 0;
 }
 
 .nav-bar-2 a,
@@ -920,7 +921,7 @@ hr {
     .sidenav a {
         padding: 8px 8px 8px 28px;
         text-decoration: none;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         color: white;
         display: block;
         transition: 0.3s;
@@ -946,7 +947,19 @@ hr {
 
     .sidenav2 {
         display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .sub-sidenav2{
+        display: flex;
         flex-direction: column;
+    }
+
+    .sub-sidenav2 div{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     .sidenav2 img{
@@ -1023,7 +1036,7 @@ hr {
     }
 
     .footer1-1 .p2 {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
     }
 
     .footer2-1 {
@@ -1069,5 +1082,6 @@ hr {
 
     .copy-rights p {
         font-size: 0.9rem;
+        padding:10px;
     }
 }

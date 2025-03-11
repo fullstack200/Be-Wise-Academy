@@ -46,14 +46,14 @@
                 <h2>Previous Payments</h2>
                 <ul class="invoice-list">
                     {% for year, months in invoices_by_year.items %}
-                        {% for month, invoices in months.items %}
-                            {% for invoice in invoices %}
-                            <li class="invoice-item">
-                                <span>{{ invoice.day }} {{ invoice.month }}, {{ invoice.year }}</span>
-                                <a href="{{ invoice.url }}">Download &nbsp;<i class="fa-solid fa-file-arrow-down"></i></a>
-                            </li>
-                            {% endfor %}
-                        {% endfor %}
+                    {% for month, invoices in months.items %}
+                    {% for invoice in invoices %}
+                    <li class="invoice-item">
+                        <span>{{ invoice.day }} {{ invoice.month }}, {{ invoice.year }}</span>
+                        <a href="{{ invoice.url }}">Download &nbsp;<i class="fa-solid fa-file-arrow-down"></i></a>
+                    </li>
+                    {% endfor %}
+                    {% endfor %}
                     {% endfor %}
                 </ul>
             </div>

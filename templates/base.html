@@ -81,14 +81,19 @@
 
             <div class="sidenav2" style="display:flex; margin-top: 30px;">
                 {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}"> <img class="nav-bar-3-img"
-                        src="{% static './static/content/logout-w.png' %}" alt=""> &nbsp;Logout</a>
-                
-                <a href="{% url 'edit_profile' %}"> <img class="nav-bar-3-img"
-                        src="{% static './static/content/edit-w.png' %}" alt=""> &nbsp;Edit Profile</a>
+                <div class="sub-sidenav2">
+                    <div>
+                        <img class="nav-bar-3-img" src="{% static './static/content/logout-w.png' %}" alt="">
+                        <a href="{% url 'logout' %}">Logout</a>
+                    </div>
+                    <div>
+                        <img class="nav-bar-3-img" src="{% static './static/content/edit-w.png' %}" alt="">
+                        <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                    </div>
+                </div>
                 {% else %}
-                <a href="{% url 'login' %}"> <img class="nav-bar-3-img"
-                    src="{% static './static/content/login-w.png' %}" alt=""> &nbsp;Login</a>
+                <img class="nav-bar-3-img" src="{% static './static/content/login-w.png' %}" alt="">
+                <a href="{% url 'login' %}">Login</a>
                 {% endif %}
             </div>
         </div>

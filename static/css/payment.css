@@ -11,15 +11,105 @@ form {
 }
 
 .model-content {
-    margin: 50px auto !important;
+    margin: 40px auto 50px;
 }
 
-@media screen and (min-width: 1024px) {}
+.invoice-list {
+    list-style: none;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+}
 
-@media screen and (max-width: 820px) {}
+.invoice-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f3eefc;
+    padding: 20px 15px;
+    border-radius: 6px;
+    margin: 30px 0;
+    transition: background 0.3s ease;
+    width: 100%;
+}
 
+.invoice-item:hover {
+    background: #e2d9f5;
+}
+
+.invoice-item span {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #36013F;
+}
+
+.invoice-item a {
+    text-decoration: none;
+    color: #fff;
+    background: #5a189a;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.invoice-item a:hover {
+    background: #3c096c;
+}
+
+.section {
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Smooth shadow */
+    border-radius: 10px;
+    /* Rounded corners for a cleaner look */
+    padding: 20px;
+    margin: 15px;
+}
+
+.section h2 {
+    text-align: center;
+    width: auto; /* Ensures the heading doesn’t stretch */
+    margin: 10px auto 0; /* Centers the inline-block element */
+}
+
+/* 📱 Responsive Design */
 @media screen and (max-width: 480px) {
-    .model-content{
-        width:75%;
+    .model-content {
+        width: 75%;
+        padding:30px;
+    }
+
+    .invoice-item {
+        width: 90%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .invoice-list {
+        width: 60%;
+    }
+
+    .invoice-item span {
+        font-size: 1.1rem;
+    }
+
+    .invoice-item a {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .invoice-list {
+        width: 50%;
+    }
+
+    .invoice-item span {
+        font-size: 1.2rem;
+    }
+
+    .invoice-item a {
+        font-size: 1.1rem;
     }
 }

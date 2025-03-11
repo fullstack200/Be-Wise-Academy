@@ -146,7 +146,7 @@
 
     #desc{
         padding:0 20px;
-        text-align: left;
+        text-align: center;
     }
 
     .overview {
@@ -226,12 +226,12 @@
         font-size: 1.3rem;
     }
 
-    #desc{
-        text-align: left;
-    }
-
     .overview h1{
         font-size: 1.7rem;
+    }
+
+    .para1 p, .para2 p{
+        font-size: 0.9rem;
     }
 
     .main-para {
@@ -276,6 +276,7 @@
 
     .first-row>div>p, .second-row>div>p {
         padding:0 10px;
+        font-size: 0.9rem;
     }
 
     .s-subjects, .services {
@@ -305,5 +306,9 @@
     .spe-sub-ser span {
         font-size: 1.5rem;
         text-align: center !important;
+    }
+
+    #desc{
+        font-size: 0.9rem;
     }
 }

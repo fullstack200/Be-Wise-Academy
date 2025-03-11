@@ -30,6 +30,9 @@ pytz = "==2024.1"
 django-recaptcha = "*"
 django-simple-captcha = "*"
 reportlab = "*"
+frontend = "*"
+tools = "*"
+pymupdf = "*"
 
 [dev-packages]
 

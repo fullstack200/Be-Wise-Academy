@@ -67,7 +67,6 @@ def payment_invoice_page(request):
             try:
                 filename = invoice_url.split('/')[-1]  # Extract filename
                 date_part = filename.replace('invoice', '')[:8]  # Extract YYYYDDMM
-                print(invoice_url)
                 year,month_number,day = int(date_part[:4]), int(date_part[4:6]), int(date_part[6:])
                 month_name = calendar.month_name[month_number]
                 month_year_key = f"{month_name} {year}"
