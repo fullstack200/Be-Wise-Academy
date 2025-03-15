@@ -2,15 +2,10 @@
     --font: 'Lato', sans-serif;
 }
 
-.nav-bar-1 p {
-    margin-bottom: 16px;
-}
-
 .main-div {
     display: flex;
     position: relative;
 }
-
 
 .container {
     border-radius: 5px;

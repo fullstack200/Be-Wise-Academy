@@ -61,7 +61,7 @@ class mathQuizResult(models.Model):
     quizTime = models.CharField(max_length=100,blank=True, null=True)
     correctAnswersCount = models.IntegerField(default=0)
     percentage = models.FloatField(default=0)
-
+    
     def __str__(self):
         return self.studentName +" "+ self.subject
     

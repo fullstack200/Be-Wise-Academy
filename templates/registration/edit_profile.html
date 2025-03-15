@@ -89,7 +89,8 @@
             
             {% csrf_token %}
             {{ form }}
-
+            <br><br>
+            <a href="{% url 'password_change'%}" style="color:white; text-decoration:underline;">Change Password</a>
             <div class="submit-button">
                 <button type="submit" class="button-b" style="vertical-align:middle">
                     <span>Save Changes</span>

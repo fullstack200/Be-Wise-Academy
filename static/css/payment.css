@@ -2,16 +2,21 @@
     width: 100px !important;
 }
 
-.nav-bar-1 p {
-    margin-bottom: 16px;
-}
-
 form {
     border-radius: 5px;
 }
 
 .model-content {
     margin: 40px auto 50px;
+    width:80%
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Ensures items wrap on smaller screens */
+    gap: 20px; /* Provides space between sections */
+    justify-content: center; /* Centers the sections */
+    margin:20px;
 }
 
 .invoice-list {
@@ -20,6 +25,9 @@ form {
     width: 90%;
     max-width: 500px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .invoice-item {
@@ -29,9 +37,8 @@ form {
     background: #f3eefc;
     padding: 20px 15px;
     border-radius: 6px;
-    margin: 30px 0;
+    margin: 15px 0;
     transition: background 0.3s ease;
-    width: 100%;
 }
 
 .invoice-item:hover {
@@ -61,28 +68,39 @@ form {
 .section {
     background-color: #fff;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    /* Smooth shadow */
     border-radius: 10px;
-    /* Rounded corners for a cleaner look */
     padding: 20px;
-    margin: 15px;
+    margin: 15px; /* Adds spacing between sections */
+    flex: 1; /* Ensures sections are of equal width */
+    min-width: 320px; /* Ensures sections maintain a reasonable size */
+    box-sizing: border-box; /* Prevents content from overflowing */
 }
 
 .section h2 {
     text-align: center;
-    width: auto; /* Ensures the heading doesn’t stretch */
-    margin: 10px auto 0; /* Centers the inline-block element */
+    width: auto;
+    margin: 10px auto 0;
 }
 
 /* 📱 Responsive Design */
-@media screen and (max-width: 480px) {
-    .model-content {
-        width: 75%;
-        padding:30px;
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stacks sections vertically */
     }
 
     .invoice-item {
-        width: 90%;
+        width: 100%;
+        margin: 15px 0;
+    }
+
+    .section {
+        width: 100%; /* Full width for smaller screens */
+        margin: 10px 0; /* Less margin for stacked layout */
+    }
+
+    .model-content{
+        width: 85%;
+        padding:20px;
     }
 }
 
@@ -98,11 +116,24 @@ form {
     .invoice-item a {
         font-size: 1rem;
     }
+
+    .invoice-item{
+        width: 120%;
+    }
 }
 
 @media screen and (min-width: 1024px) {
+    .section {
+        width: 48%; /* Side by side with slight gap */
+        margin: 10px; /* Consistent spacing */
+    }
+
     .invoice-list {
         width: 50%;
+    }
+
+    .invoice-item{
+        width: 120%;
     }
 
     .invoice-item span {

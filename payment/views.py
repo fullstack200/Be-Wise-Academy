@@ -13,7 +13,6 @@ import calendar
 import fitz
 import logging
 import io
-import uuid
 import boto3
 
 logger = logging.getLogger(__name__)
@@ -57,7 +56,8 @@ def payment_invoice_page(request):
     callback_url = 'paymenthandler/'
 
     # Fetch invoices
-    payments = Payment.objects.filter(student=user, invoice_url__isnull=False).order_by('-paymentDateNTime')
+    payments = Payment.objects.filter(student=user, invoice_url__isnull=False).order_by('-paymentDateNTime')[:4]
+    print(payments)
 
     invoices_by_year = {}
 

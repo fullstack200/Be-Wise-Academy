@@ -1,9 +1,5 @@
-.main-body{
+.main-body {
     margin-bottom: 20px;
-}
-
-.nav-bar-1 p {
-    margin-bottom: 16px;
 }
 
 .questions {
@@ -22,22 +18,23 @@ input[type=submit] {
     color: white;
     text-align: center;
     width: 150px;
-    padding:20px 10px;
+    padding: 20px 10px;
     border-style: none;
     font-size: 1rem;
     border-radius: 5px;
     cursor: pointer;
 }
 
-input[type=submit]:hover{
+input[type=submit]:hover {
     background-color: rgba(54, 1, 63, 1);
     transition: 1s;
 }
 
-.submit-button{
+.submit-button {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 input[type=text] {
@@ -47,48 +44,60 @@ input[type=text] {
     padding: 0 20px;
 }
 
-.button-b{
+.button-b {
     background-color: #36013F;
-    color:white;
+    color: white;
+}
+
+.header h1 {
+    padding: 0 20px;
 }
 
 @media screen and (min-width: 1024px) {
-    .header h1{
+    .header h1 {
         font-size: 1.5rem !important;
     }
 
-    .qimg{
-        height:300px;
-        width:300px;
+    .qimg {
+        height: 300px;
+        width: 400px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .header h1{
+    .header h1 {
         font-size: 1.2rem !important;
     }
 
-    .button-b{
-        width: 15% !important;
+    .button-b {
+        width: 20% !important;
     }
 
-    .qimg{
-        height:200px;
-        width:200px;
+    .qimg {
+        height: 200px;
+        width: 300px;
+    }
+
+    input[type=text] {
+        width: 80%;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .header h1{
+    .header h1 {
         font-size: 1rem !important;
     }
 
-    .button-b{
-        width: 25% !important;
+    .button-b {
+        width: 35% !important;
     }
 
-    .qimg{
-        height:150px;
-        width:150px;
+    .qimg {
+        height: 150px;
+        width: 250px;
+    }
+
+    input[type=text] {
+        width: 90%;
     }
 }

@@ -986,6 +986,7 @@ hr {
 
     .header h1 {
         font-size: 1.7rem;
+        padding: 0 20px;
     }
 
     .header__center h1 {

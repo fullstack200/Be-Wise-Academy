@@ -167,5 +167,20 @@ class CustomUserChangeForm(UserChangeForm):
         if grade < 7 or grade > 10:
             raise forms.ValidationError("Grade must be between 7 and 10.")
         return grade
-        
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        # Ensure at least one subject is selected
+        subjects = [
+            cleaned_data.get('Physics'),
+            cleaned_data.get('Chemistry'),
+            cleaned_data.get('Biology'),
+            cleaned_data.get('Mathematics'),
+            cleaned_data.get('Hindi')
+        ]
+        
+        if not any(subjects):
+            raise ValidationError("At least one subject must be selected.")
+
+        return cleaned_data

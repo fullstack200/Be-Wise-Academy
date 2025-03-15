@@ -2,10 +2,6 @@
     --font: 'Lato', sans-serif;
 }
 
-.nav-bar-1 p {
-    margin-bottom: 16px !important;
-}
-
 #heading{
     color:#36013F;
     margin:10px 0;
@@ -23,6 +19,13 @@
 
 .first-row, .second-row {
     display: flex;
+}
+
+.first-row div, .second-row div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .s-subjects {
@@ -79,10 +82,6 @@
 
     #camb {
         width: 400px
-    }
-
-    #cbse {
-        margin-left: 0px;
     }
 
     .curriculum img {
@@ -167,22 +166,12 @@
     }
 
     #camb {
-        margin-left: 30px;
         width: 400px;
-    }
-
-    #camb-p {
-        margin-left: 100px;
-    }
-
-    #cbse {
-        margin-left: 80px;
     }
 
     .curriculum img {
         height: 170px;
         width: 170px;
-        margin-left: 90px;
     }
 
     .first-row, .second-row {
@@ -246,22 +235,13 @@
     }
 
     #camb {
-        margin-left: 0 !important;
         width: 280px;
     }
 
-    #camb-p {
-        margin-left: 30px;
-    }
-
-    #cbse {
-        margin-left: 90px;
-    }
 
     .curriculum img {
         height: 150px;
         width: 150px;
-        margin-left: 100px;
     }
 
     .first-row, .second-row {

@@ -1,12 +1,9 @@
-.nav-bar-1 p {
-    margin-bottom: 16px;
-}
 
 .blog-list {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin: 25px 0;
+    margin: 25px 0 40px;
 }
 
 .blog {

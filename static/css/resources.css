@@ -4,10 +4,6 @@
     padding:0 20px;
 }
 
-.nav-bar-1 p {
-    margin-bottom: 16px;
-}
-
 .sub-grp {
     display: flex;
     text-align: center;
@@ -90,6 +86,7 @@
 
     .sub-grp {
         flex-direction: column;
+        margin-bottom: 50px;
     }
 
     .subjects img {
