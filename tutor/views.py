@@ -68,14 +68,25 @@ class mathQuizView(CreateView):
     extra_context = {'quizQuestions':Quiz.objects.filter(subjectName="Mathematics")}
     success_url = 'mathresult'
     
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
         form = self.get_form()
+
+        # Check if student name already exists
+        student_name = request.POST.get('studentName')
+        if mathQuizResult.objects.filter(studentName=student_name).exists():
+            # Return error message if student name exists
+            return render(request, self.template_name, {
+                'form': form,
+                'error_message': "This student name already exists. Please enter a unique name.",
+                **self.extra_context
+            })
+
         if form.is_valid():
-            post_data = self.request.POST['studentName']
-            self.request.session['name'] = post_data
+            self.request.session['name'] = student_name
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
         
 class scienceQuizView(CreateView):
     template_name = "test.html"
@@ -84,11 +95,19 @@ class scienceQuizView(CreateView):
     extra_context = {'quizQuestions':Quiz.objects.filter(subjectName="Science")}
     success_url = 'scienceresult'
 
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
         form = self.get_form()
+
+        student_name = request.POST.get('studentName')
+        if scienceQuizResult.objects.filter(studentName=student_name).exists():
+            return render(request, self.template_name, {
+                'form': form,
+                'error_message': "This username already exists. Please choose a different one.",
+                **self.extra_context
+            })
+
         if form.is_valid():
-            post_data = self.request.POST['studentName']
-            self.request.session['name'] = post_data
+            self.request.session['name'] = student_name
             return self.form_valid(form)
         else:
             return self.form_invalid(form)

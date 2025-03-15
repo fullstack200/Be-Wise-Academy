@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static './static/css/test.css' %}">
 
     <style>
-    
+
     </style>
     {% endblock %}
 
@@ -23,6 +23,9 @@
             <div class="questions">
                 <div class="header">
                     <h1>Enter a unique username [Combination of letters, numbers and special characters]</h1>
+                    {% if error_message %}
+                    <p style="color: red; font-weight: bold;">{{ error_message }}</p>
+                    {% endif %}
                 </div>
                 <div class="options">
                     <input type="text" name="studentName" id="studentName" placeholder="Your username">

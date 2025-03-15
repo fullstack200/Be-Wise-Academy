@@ -3,7 +3,7 @@
   color: #333;
   margin-top: 100px;
   max-width: 500px;
-  margin: 100px auto;
+  margin: 70px auto;
 }
 
 .funds-checkmark-text-container {
@@ -204,9 +204,10 @@
     font-size: 20pt;
   }
 
-  p {
+  .funds-success-message p {
     font-size: 14pt;
   }
+
 }
 
 @media screen and (max-width: 820px) {
@@ -218,9 +219,10 @@
     font-size: 18pt;
   }
 
-  p {
+  .funds-success-message p {
     font-size: 13pt;
   }
+
 }
 
 @media screen and (max-width: 480px) {
@@ -233,8 +235,10 @@
     padding: 0 20px;
   }
 
-  p {
-    font-size: 12pt;
+  .funds-success-message p {
+    font-size: 0.9rem;
     padding: 0 20px;
   }
+
+
 }

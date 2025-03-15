@@ -57,7 +57,6 @@ def payment_invoice_page(request):
 
     # Fetch invoices
     payments = Payment.objects.filter(student=user, invoice_url__isnull=False).order_by('-paymentDateNTime')[:4]
-    print(payments)
 
     invoices_by_year = {}
 
