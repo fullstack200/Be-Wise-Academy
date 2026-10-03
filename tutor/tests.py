@@ -10,6 +10,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
 from django.contrib.auth import get_user_model
+from tutor.models import Syllabus, Resources, Fee
 
 User = get_user_model()
 
@@ -200,12 +201,6 @@ class BlogsModelTest(TestCase):
 
         # Check if the file delete method was called
         mock_delete.assert_called_once_with(False)
-        
-from django.test import TestCase, Client
-from django.urls import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.contrib.auth import get_user_model
-from tutor.models import Syllabus, Resources, Fee
 
 User = get_user_model()
 

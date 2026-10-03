@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9dfb6500ede069446e383c931693e785691e089731c153d3e73e6e7c66ad4b27"
+            "sha256": "92c71437351c93ebfaf93d009bfc294b9159a52c6c85e27dcdd1efc05223873a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -40,24 +40,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==3.7.2"
-        },
-        "boto3": {
-            "hashes": [
-                "sha256:2c96f6a4e9ce2f4d31fc7ab47a2b3a1808063fa3837d7d8548eb2031380f7498",
-                "sha256:364f942d38da283031cde08c46c9282129fd9ebf96fa244f2709886c31ccd49a"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==1.34.23"
-        },
-        "botocore": {
-            "hashes": [
-                "sha256:1980411306593bbc2b0cd9b8d1dcacbd418b758077b82f68b932070ad902cfe9",
-                "sha256:898fa169679782f396613f50a88b9b033845625c931275832063266110ea4297"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==1.34.23"
         },
         "certifi": {
             "hashes": [
@@ -229,15 +211,6 @@
             "index": "pypi",
             "version": "==0.6.2"
         },
-        "django-storages": {
-            "hashes": [
-                "sha256:1db759346b52ada6c2efd9f23d8241ecf518813eb31db9e2589207174f58f6ad",
-                "sha256:51b36af28cc5813b98d5f3dfe7459af638d84428c8df4a03990c7d74d1bea4e5"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==1.14.2"
-        },
         "frontend": {
             "hashes": [
                 "sha256:9b36d7092892271431cd693eaca14767acbdbb67f6f6f38dc3e0ff15618c7109",
@@ -280,15 +253,6 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==2.2.0"
-        },
-        "jmespath": {
-            "hashes": [
-                "sha256:02e2e4cc71b5bcab88332eebf907519190dd9e6e82107fa7f83b1003a6252980",
-                "sha256:90261b206d6defd58fdd5e85f478bf633a2901798906be2ad389150c5c60edbe"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==1.0.1"
         },
         "lxml": {
             "hashes": [
@@ -589,15 +553,6 @@
             "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==2.31.0"
-        },
-        "s3transfer": {
-            "hashes": [
-                "sha256:3cdb40f5cfa6966e812209d0994f2a4709b561c88e90cf00c2696d2df4e56b2e",
-                "sha256:d0c8bbf672d5eebbe4e57945e23b972d963f07d82f661cabf678a5c88831595b"
-            ],
-            "index": "pypi",
-            "markers": "python_version >= '3.8'",
-            "version": "==0.10.0"
         },
         "setuptools": {
             "hashes": [

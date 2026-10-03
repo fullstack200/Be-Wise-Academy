@@ -13,10 +13,12 @@ from users.forms import *
 def physicsView(request):
     docs = Resources.objects.filter(subjectName="Physics")
     return render(request, "subject.html", {'list': docs})
+
 @login_required
 def chemistryView(request):
     docs = Resources.objects.filter(subjectName="Chemistry")
     return render(request, "subject.html", {'list': docs})
+
 @login_required
 def mathematicsView(request):
     docs = Resources.objects.filter(subjectName="Mathematics")
@@ -216,6 +218,6 @@ class BlogListView(ListView):
     def __str__(self):
         return self.blogTitle
 
-def blogDetailView(request,bid):
+def blogDetailView(request, bid):
     blog = Blogs.objects.get(bid=bid)
     return render(request, "blogs.html", {'blog': blog})

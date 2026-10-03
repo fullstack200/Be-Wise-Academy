@@ -11,7 +11,7 @@ import datetime
 class Resources(models.Model):
     subjectName = models.CharField(max_length=50)
     topicName = models.CharField(max_length=50)
-    document = models.FileField(upload_to="media/docs/")
+    document = models.FileField(upload_to="docs/")
     uploaded_on = models.DateField(default=datetime.date.today)
     
     def __str__(self):
@@ -38,7 +38,7 @@ class Quiz(models.Model):
     topicName = models.CharField(max_length=100)
     questionNumber = models.CharField(max_length=100,default="0")
     question = models.TextField()
-    questionImage = models.ImageField(null=True,blank=True,upload_to='media/quiz/')
+    questionImage = models.ImageField(null=True,blank=True,upload_to='quiz/')
     nameTag = models.CharField(max_length=100,default=0)
     correctAnswer = models.CharField(max_length=1000)
 
@@ -93,14 +93,14 @@ class Blogs(models.Model):
     blogTitle = models.CharField(max_length=100)
     blogAuthor = models.CharField(max_length=50)
     blogUploadDate = models.DateField(default=datetime.date.today)
-    blogImage = models.ImageField(upload_to="media/blogs/", height_field=None, width_field=None, max_length=1000)
+    blogImage = models.ImageField(upload_to="blogs/", height_field=None, width_field=None, max_length=1000)
     blogPara = models.TextField()
     
     def __str__(self):
         return self.blogTitle
         
 @receiver(models.signals.post_delete, sender=Resources)
-def remove_file_from_s3_resources(sender, instance, using, **kwargs):
+def remove_resource_file(sender, instance, using, **kwargs):
     image_fields = ['document']
     for field_name in image_fields:
         # Get the image field value
@@ -110,7 +110,7 @@ def remove_file_from_s3_resources(sender, instance, using, **kwargs):
             image_field.delete(save=False)
             
 @receiver(models.signals.post_delete, sender=Blogs)
-def remove_file_from_s3_blogs(sender, instance, using, **kwargs):
+def remove_blog_image(sender, instance, using, **kwargs):
     image_fields = ['blogImage']
     for field_name in image_fields:
         # Get the image field value
@@ -120,7 +120,7 @@ def remove_file_from_s3_blogs(sender, instance, using, **kwargs):
             image_field.delete(save=False)
 
 @receiver(models.signals.post_delete, sender=Quiz)
-def remove_file_from_s3_quiz(sender, instance, using, **kwargs):
+def remove_quiz_image(sender, instance, using, **kwargs):
     image_fields = ['questionImage']
     for field_name in image_fields:
         # Get the image field value

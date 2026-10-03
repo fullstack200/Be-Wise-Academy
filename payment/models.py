@@ -1,5 +1,6 @@
 import uuid
 import datetime
+from urllib.parse import unquote, urlsplit
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
@@ -35,18 +36,28 @@ logger = logging.getLogger(__name__)  # Add this at the top of your file
 
 @receiver(post_delete, sender=Payment)
 def remove_invoice_pdf(sender, instance, **kwargs):
-    """Delete the associated invoice PDF from S3 when the Payment object is deleted."""
+    """Delete the associated invoice PDF from local storage."""
     if instance.invoice_url:
-        try:
-            if instance.invoice_url.startswith('https://nbewise.s3.amazonaws.com/'):
-                file_path = instance.invoice_url.replace('https://nbewise.s3.amazonaws.com/', '')
+        parsed_url = urlsplit(instance.invoice_url)
+        if parsed_url.scheme or parsed_url.netloc:
+            logger.info("Skipping invoice deletion for a non-local URL.")
+            return
 
+        file_path = unquote(parsed_url.path).lstrip('/')
+        media_url_prefix = settings.MEDIA_URL.lstrip('/')
+        if file_path.startswith(media_url_prefix):
+            file_path = file_path[len(media_url_prefix):]
+
+        if not file_path:
+            return
+
+        try:
             logger.info(f"Attempting to delete file: {file_path}")
             
             if default_storage.exists(file_path):
                 default_storage.delete(file_path)
                 logger.info(f"File {file_path} deleted successfully.")
             else:
-                logger.warning(f"File {file_path} not found on S3.")
+                logger.warning(f"File {file_path} not found in local storage.")
         except Exception as e:
-            logger.error(f"Error deleting invoice file from S3: {e}")
+            logger.error(f"Error deleting invoice file from local storage: {e}")

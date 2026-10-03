@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
-
 class Feedback(models.Model):
     studentName = models.CharField(max_length=50)
     studentGrade = models.IntegerField()

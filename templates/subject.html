@@ -6,7 +6,7 @@
 <head>
     {% block extrahead %}
     <!-- CSS File link -->
-    <link rel="stylesheet" href="{% static './static/css/subject.css' %}">
+    <link rel="stylesheet" href="{% static 'css/subject.css' %}">
     {% endblock %}
     
     <style>
@@ -30,14 +30,13 @@
             <p class="cstatus">Content will be added soon.</p>
             {% else %}
             {% for i in list %}
-            <div class="file">
+            <div class="file"> 
                 <p><span><b>{{i.topicName}}</b></span><br>Uploaded on : {{i.uploaded_on}}</p>
                 <a href="{{i.document.url}}" download><i class="fa-solid fa-file-arrow-down"
                         style="color: #36013f;"></i></a>
             </div>
             {% endfor %}
             {% endif %}
-         
         </div>
     </div>
     {% endblock content %}

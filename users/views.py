@@ -68,7 +68,7 @@ class EvaluationPageView(TemplateView):
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
     template_name = 'registration/signup.html'
-    success_url = '/confirmed/'
+    success_url = '/signupconfirmed/'
     
 class EnquiryFormConfirm(TemplateView):
     template_name = 'enquiryconfirm.html'

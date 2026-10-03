@@ -14,17 +14,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap" rel="stylesheet">
 
     <!-- Favicon link -->
-    <link rel="icon" href="{% static './static/content/favicon.ico' %}">
+    <link rel="icon" href="{% static 'content/favicon.ico' %}">
 
     <!-- Font Awsome Icons link -->
     <script src="https://kit.fontawesome.com/562a44d30d.js" crossorigin="anonymous"></script>
 
     <!-- CSS File link -->
-    <link rel="stylesheet" href="{% static './static/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
     <!-- JS File link -->
-    <script src="{% static './static/js/sidemenu.js' %}"></script>
-    <script src="{% static './static/js/reveal.js' %}"></script>
+    <script src="{% static 'js/sidemenu.js' %}"></script>
+    <script src="{% static 'js/reveal.js' %}"></script>
 
     {% block extrahead %}{% endblock %}
 
@@ -34,7 +34,7 @@
     <div class="nav-bar">
         <a href="{% url 'home' %}" style="text-decoration:none; color:#36013F;">
             <div class="nav-bar-1">
-                <img src="{% static './static/content/Logo.png' %}" alt="Logo">
+                <img src="{% static 'content/Logo.png' %}" alt="Logo">
                 <p><b>BeWise<br> Academy</b></p>
             </div>
         </a>
@@ -52,14 +52,14 @@
 
         {% if user.is_authenticated %}
         <div class="nav-bar-3" style="width:20%">
-            <img class="nav-bar-3-img" src="{% static './static/content/logout.png' %}" alt=""><a
+            <img class="nav-bar-3-img" src="{% static 'content/logout.png' %}" alt=""><a
                 href="{% url 'logout' %}"> Logout </a> | <img class="nav-bar-3-img"
-                src="{% static './static/content/edit.png' %}" alt=""> <a href="{% url 'edit_profile' %}"> Edit
+                src="{% static 'content/edit.png' %}" alt=""> <a href="{% url 'edit_profile' %}"> Edit
                 Profile</a>
         </div>
         {% else %}
         <div class="nav-bar-3" style="width:8%">
-            <img class="nav-bar-3-img" src="{% static './static/content/login.png' %}" alt=""><a
+            <img class="nav-bar-3-img" src="{% static 'content/login.png' %}" alt=""><a
                 href="{% url 'login' %}">Login</a>
         </div>
         {% endif %}
@@ -82,16 +82,16 @@
                 {% if user.is_authenticated %}
                 <div class="sub-sidenav2">
                     <div>
-                        <img class="nav-bar-3-img" src="{% static './static/content/logout-w.png' %}" alt="">
+                        <img class="nav-bar-3-img" src="{% static 'content/logout-w.png' %}" alt="">
                         <a href="{% url 'logout' %}">Logout</a>
                     </div>
                     <div>
-                        <img class="nav-bar-3-img" src="{% static './static/content/edit-w.png' %}" alt="">
+                        <img class="nav-bar-3-img" src="{% static 'content/edit-w.png' %}" alt="">
                         <a href="{% url 'edit_profile' %}">Edit Profile</a>
                     </div>
                 </div>
                 {% else %}
-                <img class="nav-bar-3-img" src="{% static './static/content/login-w.png' %}" alt="">
+                <img class="nav-bar-3-img" src="{% static 'content/login-w.png' %}" alt="">
                 <a href="{% url 'login' %}">Login</a>
                 {% endif %}
             </div>
@@ -112,7 +112,7 @@
                     560043</p>
             </div>
             <div class="footer2-1">
-                <img src="{% static './static/content/Logo.png' %}" alt="logo">
+                <img src="{% static 'content/Logo.png' %}" alt="logo">
                 <p><b>BeWise<br>Academy</b></p>
             </div>
         </div>

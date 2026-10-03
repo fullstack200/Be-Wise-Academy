@@ -9,9 +9,7 @@ from .views import generate_invoice_pdf
 import calendar
 import logging
 from django.test import TestCase
-from unittest.mock import patch, Mock
-import io
-from .views import generate_invoice_pdf 
+from unittest.mock import patch
 import uuid
 import datetime
 from .invoice_generator import generate_invoice_pdf
@@ -197,62 +195,57 @@ import datetime
 
 
 class PaymentTestCase(TestCase):
-    @patch('django.core.files.storage.default_storage.delete')  # Mock S3 delete method
-    @patch('django.core.files.storage.default_storage.exists')  # Mock S3 exists method
-    def test_s3_file_deletion_on_payment_delete(self, mock_exists, mock_delete):
-        """Test if the invoice file is deleted from S3 when a Payment object is deleted"""
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='invoice-delete-test',
+            password='testpassword',
+            studentName='Invoice Test',
+            grade=10,
+            parentName='Parent',
+            phoneNumber=1234567890,
+            schoolName='Test School',
+            syllabus='CBSE',
+            Physics=True,
+            Chemistry=False,
+            Biology=False,
+            Hindi=False,
+        )
 
-        # Create a mock Payment object with an invoice URL
+    @patch('django.core.files.storage.default_storage.delete')
+    @patch('django.core.files.storage.default_storage.exists')
+    def test_local_invoice_deleted_on_payment_delete(self, mock_exists, mock_delete):
         payment = Payment.objects.create(
-            student_id=1,  # Assuming you have a CustomUser with ID 1
+            student=self.user,
             syllabus="Math",
             grade="A",
             amount=1000,
             paymentStatus=True,
             paymentDateNTime=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             invoice_number=f"invoice{datetime.date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6]}",
-            invoice_url="https://nbewise.s3.amazonaws.com/invoices/invoice20250803-44aa880a.pdf"
+            invoice_url="/media/invoices/invoice20250803-44aa880a.pdf"
         )
 
-        # Mock the exists method to return True, simulating that the file exists on S3
         mock_exists.return_value = True
-
-        # Delete the Payment object
         payment.delete()
 
-        # Get the relative file path from the URL
-        file_path = payment.invoice_url.replace('https://nbewise.s3.amazonaws.com/', '')
+        mock_delete.assert_called_once_with('invoices/invoice20250803-44aa880a.pdf')
 
-        # Check if the delete method was called with the correct file path
-        mock_delete.assert_called_once_with(file_path)
-
-    @patch('django.core.files.storage.default_storage.delete')  # Mock S3 delete method
-    @patch('django.core.files.storage.default_storage.exists')  # Mock S3 exists method
-    def test_s3_file_not_deleted_if_not_found(self, mock_exists, mock_delete):
-        """Test if the file is not deleted from S3 if it doesn't exist"""
-
-        # Create a mock Payment object with an invoice URL
+    @patch('django.core.files.storage.default_storage.delete')
+    @patch('django.core.files.storage.default_storage.exists')
+    def test_local_invoice_not_deleted_if_not_found(self, mock_exists, mock_delete):
         payment = Payment.objects.create(
-            student_id=1,  # Assuming you have a CustomUser with ID 1
+            student=self.user,
             syllabus="Math",
             grade="A",
             amount=1000,
             paymentStatus=True,
             paymentDateNTime=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             invoice_number=f"invoice{datetime.date.today().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6]}",
-            invoice_url="https://nbewise.s3.amazonaws.com/invoices/invoice20250803-44aa880a.pdf"
+            invoice_url="/media/invoices/invoice20250803-44aa880a.pdf"
         )
 
-        # Mock the exists method to return False, simulating that the file doesn't exist on S3
         mock_exists.return_value = False
-
-        # Delete the Payment object
         payment.delete()
-
-        # Get the relative file path from the URL
-        file_path = payment.invoice_url.replace('https://nbewise.s3.amazonaws.com/', '')
-
-        # Check if the delete method was not called since the file doesn't exist
         mock_delete.assert_not_called()
 
 class PaymentHandlerTest(TestCase):
@@ -276,7 +269,7 @@ class PaymentHandlerTest(TestCase):
     def test_successful_payment(self, mock_generate_invoice_pdf, mock_verify_signature):
         """Test successful payment flow with proper data and signature verification."""
         mock_verify_signature.return_value = True
-        mock_generate_invoice_pdf.return_value = 'invoices/invoice20230925-xyz.pdf'
+        mock_generate_invoice_pdf.return_value = '/media/invoices/invoice20230925-xyz.pdf'
 
         session = self.client.session
         session['studentN'] = self.user.studentName
@@ -293,12 +286,12 @@ class PaymentHandlerTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'status.html')
-        self.assertContains(response, 'invoices/invoice20230925-xyz.pdf')
+        self.assertContains(response, '/media/invoices/invoice20230925-xyz.pdf')
 
         payment = Payment.objects.get(student=self.user)
         self.assertTrue(payment.paymentStatus)
         self.assertEqual(payment.amount, 900)
-        self.assertEqual(payment.invoice_url, 'invoices/invoice20230925-xyz.pdf')
+        self.assertEqual(payment.invoice_url, '/media/invoices/invoice20230925-xyz.pdf')
 
     @patch('payment.views.razorpay_client.utility.verify_payment_signature')
     def test_failed_payment_due_to_signature_verification(self, mock_verify_signature):
@@ -348,63 +341,42 @@ class PaymentHandlerTest(TestCase):
 #         self.assertEqual(response.status_code, 400)  # Bad request expected
 
 class GenerateInvoicePdfTests(TestCase):
-    
-    @patch("boto3.client")
-    def test_s3_pdf_download_failure(self, mock_s3_client):
-        mock_s3 = Mock()
-        mock_s3_client.return_value = mock_s3
-
-        empty_file = io.BytesIO()
-        mock_s3.download_fileobj.side_effect = lambda bucket, key, file_obj: file_obj.write(empty_file.getvalue())
-
-        class MockPayment:
-            invoice_number = "INV-001"
-            amount = 1000
-            student = Mock(studentName="John Doe", syllabus="Science", grade=10)
-
-        payment = MockPayment()
-
-        with self.assertRaisesMessage(ValueError, "Downloaded PDF file is empty or corrupted."):
-            generate_invoice_pdf(payment)
-            
-    @patch("boto3.client")
-    def test_invalid_pdf_file(self, mock_s3_client):
-        mock_s3 = Mock()
-        mock_s3_client.return_value = mock_s3
-
-        corrupted_pdf = io.BytesIO(b"This is not a valid PDF file")
-        mock_s3.download_fileobj.side_effect = lambda bucket, key, file_obj: file_obj.write(corrupted_pdf.getvalue())
-
-        class MockPayment:
-            invoice_number = "INV-002"
-            amount = 1500
-            student = Mock(studentName="Jane Doe", syllabus="Math", grade=11)
-
-        payment = MockPayment()
-
-        with self.assertRaisesMessage(ValueError, "Downloaded PDF data is invalid or corrupted."):
-            generate_invoice_pdf(payment)
-
-    @patch("boto3.client")
-    def test_montserrat_font_download_failure(self, mock_s3_client):
-        mock_s3 = Mock()
-        mock_s3_client.return_value = mock_s3
-
-        valid_pdf = io.BytesIO(b"%PDF-1.7\nValid PDF Content")
-        mock_s3.download_fileobj.side_effect = lambda bucket, key, file_obj: (
-            file_obj.write(valid_pdf.getvalue()) if "invoice_template.pdf" in key
-            else file_obj.write(b"")
+    @patch('payment.views.default_storage')
+    def test_invoice_is_saved_to_local_filesystem(self, mock_storage):
+        mock_storage.save.side_effect = lambda name, content: name
+        mock_storage.url.side_effect = lambda name: f'/media/{name}'
+        user = CustomUser.objects.create_user(
+            username='invoice-generator-test',
+            password='testpassword',
+            studentName='Invoice Test',
+            grade=10,
+            parentName='Parent',
+            phoneNumber=1234567890,
+            schoolName='Test School',
+            syllabus='CBSE',
+            Physics=True,
+            Chemistry=False,
+            Biology=False,
+            Hindi=False,
+        )
+        syllabus = Syllabus.objects.create(syllabusName='CBSE')
+        Fee.objects.create(syllabus=syllabus, subject='Physics', gradeNumber=10, fee=5000)
+        payment = Payment.objects.create(
+            student=user,
+            syllabus='CBSE',
+            grade='10',
+            amount=5000,
+            paymentStatus=True,
+            paymentDateNTime='2026-10-03 00:00:00',
         )
 
-        class MockPayment:
-            invoice_number = "INV-003"
-            amount = 2000
-            student = Mock(studentName="Alice", syllabus="Physics", grade=12)
+        invoice_url = generate_invoice_pdf(payment)
 
-        payment = MockPayment()
-
-        with self.assertRaisesMessage(ValueError, "Downloaded font file is empty or corrupted."):
-            generate_invoice_pdf(payment)
+        self.assertEqual(invoice_url, f'/media/invoices/{payment.invoice_number}.pdf')
+        mock_storage.save.assert_called_once()
+        self.assertTrue(mock_storage.save.call_args.args[0].startswith('invoices/'))
+        payment.refresh_from_db()
+        self.assertEqual(payment.invoice_url, invoice_url)
 
 
 class PaymentModelTests(TestCase):
@@ -436,9 +408,9 @@ class PaymentModelTests(TestCase):
             syllabus="Math",
             grade="11",
             amount=2000,
-            invoice_url="https://nbewise.s3.amazonaws.com/invoices/invoice20240925-abc123.pdf"
+            invoice_url="/media/invoices/invoice20240925-abc123.pdf"
         )
-        self.assertEqual(payment.invoice_url, "https://nbewise.s3.amazonaws.com/invoices/invoice20240925-abc123.pdf")
+        self.assertEqual(payment.invoice_url, "/media/invoices/invoice20240925-abc123.pdf")
 
 class RemoveInvoicePdfTests(TestCase):
     def setUp(self):
@@ -463,7 +435,7 @@ class RemoveInvoicePdfTests(TestCase):
             syllabus="Science",
             grade="10",
             amount=1000,
-            invoice_url="https://nbewise.s3.amazonaws.com/invoices/invoice20240925-xyz789.pdf"
+            invoice_url="/media/invoices/invoice20240925-xyz789.pdf"
         )
 
         # Trigger deletion
@@ -483,7 +455,7 @@ class RemoveInvoicePdfTests(TestCase):
             syllabus="History",
             grade="12",
             amount=3000,
-            invoice_url="https://nbewise.s3.amazonaws.com/invoices/invoice20240925-zzz999.pdf"
+            invoice_url="/media/invoices/invoice20240925-zzz999.pdf"
         )
 
         # Trigger deletion
@@ -519,12 +491,11 @@ class RemoveInvoicePdfTests(TestCase):
             syllabus="Math",
             grade="8",
             amount=750,
-            invoice_url="https://nbewise.s3.amazonaws.com/invoices/invoice20240925-error999.pdf"
+            invoice_url="/media/invoices/invoice20240925-error999.pdf"
         )
 
         # Trigger deletion
         with self.assertLogs('payment.models', level='ERROR') as log:  # Replace 'app.models' with your app's name
             payment.delete()
 
-        self.assertIn("Error deleting invoice file from S3", log.output[0])
-
+        self.assertIn("Error deleting invoice file from local storage", log.output[0])

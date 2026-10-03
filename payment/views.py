@@ -4,6 +4,9 @@ from tutor.models import Fee,Syllabus
 from django.shortcuts import render
 import razorpay
 from django.conf import settings
+from django.contrib.staticfiles import finders
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseBadRequest
 from .models import Payment
@@ -13,7 +16,6 @@ import calendar
 import fitz
 import logging
 import io
-import boto3
 
 logger = logging.getLogger(__name__)
 
@@ -101,47 +103,29 @@ def payment_invoice_page(request):
     return render(request, 'payment.html', context)
 
 def generate_invoice_pdf(payment):
-    """Generate an invoice PDF for the given payment."""
-    
-    # 🔹 Step 1: Initialize S3 Client
-    s3 = boto3.client(
-        "s3",
-        aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-        region_name=settings.AWS_S3_REGION_NAME
-    )
+    """Generate an invoice PDF and save it to the configured file storage."""
+    template_path = finders.find('invoice_template.pdf')
+    font_path = finders.find('fonts/Montserrat-Regular.ttf')
+    if not template_path:
+        raise FileNotFoundError("Static invoice template was not found.")
+    if not font_path:
+        raise FileNotFoundError("Static invoice font was not found.")
 
-    # 🔹 Step 2: Download PDF Template from S3
-    template_s3_key = "static/invoice_template.pdf"  # S3 Path
-    file_stream = io.BytesIO()
-    s3.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, template_s3_key, file_stream)
-    file_stream.seek(0)
-    
-    file_stream.seek(0)
-    if not file_stream.getvalue().strip():
-        raise ValueError("Downloaded PDF file is empty or corrupted.")
+    with open(template_path, 'rb') as template_file:
+        template_bytes = template_file.read()
+    if not template_bytes.strip():
+        raise ValueError("Invoice template file is empty or corrupted.")
+    if not template_bytes.startswith(b'%PDF'):
+        raise ValueError("Invoice template data is invalid or corrupted.")
 
-    # Ensure valid PDF format
-    if not file_stream.getvalue().startswith(b'%PDF'):
-        raise ValueError("Downloaded PDF data is invalid or corrupted.")
+    with open(font_path, 'rb') as font_file:
+        font_bytes = font_file.read()
+    if not font_bytes.strip():
+        raise ValueError("Invoice font file is empty or corrupted.")
 
-    # 🔹 Step 3: Download Montserrat Font from S3
-    font_s3_key = "static/fonts/Montserrat-Regular.ttf"
-    font_stream = io.BytesIO()
-    s3.download_fileobj(settings.AWS_STORAGE_BUCKET_NAME, font_s3_key, font_stream)
-
-    # ✅ Check if the downloaded file is valid
-    font_stream.seek(0)
-    if not font_stream.getvalue().strip():
-        raise ValueError("Downloaded font file is empty or corrupted.")
-
-    # 🔹 Step 4: Load PDF Template
-    doc = fitz.open(stream=file_stream, filetype="pdf")
+    doc = fitz.open(stream=template_bytes, filetype="pdf")
     page = doc[0]
 
-    # 🔹 Step 5: Register the Montserrat Font in PyMuPDF
-    font_stream.seek(0)  # ✅ Ensure the pointer is at the start before reading
-    font_bytes = font_stream.read()
     font_name="montserrat"
     page.insert_font(fontname=font_name, fontbuffer=font_bytes)
 
@@ -188,22 +172,17 @@ def generate_invoice_pdf(payment):
         page.insert_text((subject_x, y_position), subject, fontsize=12, fontname=font_name, color=(0, 0, 0))
         page.insert_text((price_x, y_position), f"₹ {price}", fontsize=12, fontname=font_name, color=(0, 0, 0))
 
-    # 🔹 Step 10: Save the Updated PDF in Memory
+    # Save the updated PDF in memory before writing it through Django storage.
     output_stream = io.BytesIO()
     doc.save(output_stream)
     doc.close()
     output_stream.seek(0)
 
-    # 🔹 Step 11: Upload the Invoice to S3
-    current_year = datetime.now().year  # Get the current year
-    unique_string = payment.invoice_number[16:]
-    invoice_filename = f"invoice{current_year}{datetime.now().strftime('%m%d')}-{unique_string}.pdf"
-    invoice_s3_key = f"invoices/{invoice_filename}"
-
-    s3.upload_fileobj(output_stream, settings.AWS_STORAGE_BUCKET_NAME, invoice_s3_key, ExtraArgs={'ContentType': 'application/pdf'})
-
-    # 🔹 Step 12: Return Invoice URL
-    invoice_url = f"https://{settings.AWS_S3_CUSTOM_DOMAIN}/{invoice_s3_key}"
+    invoice_name = default_storage.save(
+        f"invoices/{payment.invoice_number}.pdf",
+        ContentFile(output_stream.getvalue()),
+    )
+    invoice_url = default_storage.url(invoice_name)
     payment.invoice_url = invoice_url
     payment.save(update_fields=['invoice_url'])
     return invoice_url
