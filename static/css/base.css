@@ -110,6 +110,7 @@ body {
 
 .nav-bar-2 a,
 .nav-bar-3 a {
+    text-decoration: none;
     background-image: linear-gradient(to right,
             #36013f,
             #36013f 50%,
@@ -493,6 +494,7 @@ ul>li {
 }
 
 .footer2-2 a {
+    text-decoration: none;
     background-image: linear-gradient(to right,
             white,
             white 50%,
